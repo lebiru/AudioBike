@@ -14,7 +14,7 @@ public class Main {
 		al.beginSongAnalysis();
 		
 		AudioWorld aw = new AudioWorld();
-		aw.simulationTest();
+		aw.simulationTest2();
 		aw.simulateWorld();
 		
 		

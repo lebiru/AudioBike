@@ -10,11 +10,30 @@ public class MJWTest2 extends TestbedTest {
 
 	@Override
 	public void initTest(boolean argDeserialized) {
-		setTitle("Couple of Things Test");
+		setTitle("Level 1");
 
-		getWorld().setGravity(new Vec2());
+		getWorld().setGravity(new Vec2(0.0f, -10.0f));
+		boolean doSleep = true;
+		getWorld().setAllowSleep(doSleep);
+		
+		BodyDef groundBodyDef = new BodyDef(); // body definition
+		groundBodyDef.position.set(0.0f, -10.0f); // set bodydef position
+		Body groundBody = getWorld().createBody(groundBodyDef); // create body based on definition
+		PolygonShape groundBox = new PolygonShape(); // make a shape representing ground
+		groundBox.setAsBox(50.0f, 10.0f); // shape is a rect: 100 wide, 20 high
+		groundBody.createFixture(groundBox, 0.0f); // bind shape to ground body
+		
+		BodyDef leftWall = new BodyDef();
+		leftWall.position.set(-20.0f, 0.0f);
+		Body leftWallBody = getWorld().createBody(leftWall);
+		PolygonShape leftWallBox = new PolygonShape();
+		leftWallBox.setAsBox(5.0f, 100.0f);
+		leftWallBody.createFixture(leftWallBox, 0.0f);
 
-		for (int i = 0; i < 2; i++) {
+		
+		
+
+		for (int i = 0; i < 30; i++) {
 			PolygonShape polygonShape = new PolygonShape();
 			polygonShape.setAsBox(1, 1);
 
@@ -28,11 +47,12 @@ public class MJWTest2 extends TestbedTest {
 
 			body.applyForce(new Vec2(-10000 * (i - 1), 0), new Vec2());
 		}
+		
 	}
 
 	@Override
 	public String getTestName() {
-		return "Couple of Things";
+		return "Level 1";
 	}
 
 }

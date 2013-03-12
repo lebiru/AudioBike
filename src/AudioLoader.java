@@ -19,7 +19,7 @@ public class AudioLoader {
 
 	public void beginSongAnalysis() throws UnsupportedTagException, InvalidDataException, IOException
 	{
-		Mp3File mp3File = new Mp3File("C:\\Users\\biru\\git\\AudioBike\\src\\testSongs\\Loveline.mp3");
+		Mp3File mp3File = new Mp3File("/home/student/babdulnabi/AudioBike/src/testSongs/Loveline.mp3");
 		System.out.println("lenght of mp3 is: " + mp3File.getLengthInSeconds() + " second");
 		System.out.println(mp3File.getFilename());
 	}
