@@ -1,7 +1,6 @@
 import java.io.IOException;
 
-import audioBike_AudioLoader.InvalidDataException;
-import audioBike_AudioLoader.UnsupportedTagException;
+import com.mpatric.mp3agic.*;
 
 public class Main {
 
@@ -10,12 +9,12 @@ public class Main {
 		
 		System.out.println("AudioBike!");
 		
-		AudioLoader al = new AudioLoader();
-		al.beginSongAnalysis();
+		AudioLoader audioLoader = new AudioLoader();
+		audioLoader.beginSongAnalysis();
 		
-		AudioWorld aw = new AudioWorld();
-		aw.simulationTest2();
-		aw.simulateWorld();
+		AudioWorld audioWorld = new AudioWorld();
+		audioWorld.simulationTest2();
+		audioWorld.simulateWorld();
 		
 		
 		
