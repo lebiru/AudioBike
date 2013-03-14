@@ -1,10 +1,11 @@
 import java.io.IOException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
-import com.mpatric.mp3agic.*;
+
 
 public class Main {
 
-	public static void main(String[] args) throws UnsupportedTagException, InvalidDataException, IOException
+	public static void main(String[] args) throws IOException, UnsupportedAudioFileException
 	{
 		
 		System.out.println("AudioBike!");
