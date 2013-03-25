@@ -10,13 +10,13 @@ public class Main {
 		
 		System.out.println("AudioBike!");
 		
-		AudioLoader audioLoader = new AudioLoader();
-		audioLoader.beginSongAnalysis();
+
 		
 		AudioWorld audioWorld = new AudioWorld();
 		audioWorld.simulationTest2();
 		audioWorld.simulateWorld();
-		
+		AudioLoader audioLoader = new AudioLoader();
+		audioLoader.beginSongAnalysis();
 		
 		
 	}
