@@ -9,14 +9,14 @@ public class Main {
 	{
 		
 		System.out.println("AudioBike!");
-		
 
-		
 		AudioWorld audioWorld = new AudioWorld();
 		audioWorld.simulationTest2();
 		audioWorld.simulateWorld();
 		AudioLoader audioLoader = new AudioLoader();
 		audioLoader.beginSongAnalysis();
+		
+		
 		
 		
 	}
