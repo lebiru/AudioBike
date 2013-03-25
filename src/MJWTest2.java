@@ -1,120 +1,98 @@
-import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.collision.shapes.PolygonShape;
+import javax.swing.JFrame;
 
+import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.testbed.framework.TestbedTest;
+import org.jbox2d.dynamics.World;
+import org.jbox2d.testbed.framework.TestList;
+import org.jbox2d.testbed.framework.TestbedFrame;
+import org.jbox2d.testbed.framework.TestbedModel;
+import org.jbox2d.testbed.framework.TestbedPanel;
+import org.jbox2d.testbed.framework.TestbedSetting;
+import org.jbox2d.testbed.framework.TestbedSetting.SettingType;
+import org.jbox2d.testbed.framework.j2d.TestPanelJ2D;
 
-public class MJWTest2 extends TestbedTest {
+public class AudioWorld {
 
+	public AudioWorld()
+	{
+		
+	}
+	
+	public void simulateWorld()
+	{
+		
+	}
+	
+	public void simulationTest2()
+	{
+		
+		TestbedModel model = new TestbedModel();         // create our model
 
-	@Override
-	public void initTest(boolean argDeserialized) {
-		setTitle("Level 1");
+		// add tests
+		TestList.populateModel(model);                   // populate the provided testbed tests
+		model.addCategory("AudioBike");             // add a category
+		model.addTest(new MJWTest2());                // add our test
+		
 
-		getWorld().setGravity(new Vec2(0.0f, -10.0f));
+		// add our custom setting "My Range Setting", with a default value of 10, between 0 and 20
+		model.getSettings().addSetting(new TestbedSetting("My Range Setting", SettingType.ENGINE, 10, 0, 20));
+
+		TestbedPanel panel = new TestPanelJ2D(model);    // create our testbed panel
+
+		JFrame testbed = new TestbedFrame(model, panel); // put both into our testbed frame
+		// etc
+		testbed.setVisible(true);
+		testbed.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	public void simulationTest()
+	{
+		Vec2 gravity = new Vec2(0.0f, -10.0f);
 		boolean doSleep = true;
-		getWorld().setAllowSleep(doSleep);
+		World world = new World(gravity, doSleep);
 
-		makeVehicle();
-		makeLevel();
+		// Make a Body for the ground via definition and shape binding that gives it a boundary
+		// 
+		BodyDef groundBodyDef = new BodyDef(); // body definition
+		groundBodyDef.position.set(0.0f, -10.0f); // set bodydef position
+		Body groundBody = world.createBody(groundBodyDef); // create body based on definition
+		PolygonShape groundBox = new PolygonShape(); // make a shape representing ground
+		groundBox.setAsBox(50.0f, 10.0f); // shape is a rect: 100 wide, 20 high
+		groundBody.createFixture(groundBox, 0.0f); // bind shape to ground body
 
-	}
+		// Make another Body that is dynamic, and will be subject to forces.
+		//
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.DYNAMIC; // dynamic means it is subject to forces
+		bodyDef.position.set(0.0f, 4.0f);
+		Body body = world.createBody(bodyDef);
+		PolygonShape dynamicBox = new PolygonShape();
+		dynamicBox.setAsBox(1.0f, 1.0f);
+		FixtureDef fixtureDef = new FixtureDef(); // fixture def that we load up with the following info:
+		fixtureDef.shape = dynamicBox; // ... its shape is the dynamic box (2x2 rectangle)
+		fixtureDef.density = 1.0f; // ... its density is 1 (default is zero)
+		fixtureDef.friction = 0.3f; // ... its surface has some friction coefficient
+		body.createFixture(fixtureDef); // bind the dense, friction-laden fixture to the body
 
-	private void makeVehicle() 
-	{
-			
-
-	}
-
-	private void makeLevel() {
-
-		BodyDef b = new BodyDef();
-		b.position.set(0.0f, 0.5f);
-
-		PolygonShape bbox = new PolygonShape();
-		bbox.setAsBox(50.0f, 0.5f);
-
-
-
-		Body body = getWorld().createBody(b);
-		FixtureDef fixtureDef = new FixtureDef();
-
-		bbox.setAsBox(1.0f, 2.0f, new Vec2(-50.0f, 0.5f), 0.0f);
-		fixtureDef.shape = bbox;
-		body.createFixture(fixtureDef);
-
-		bbox.setAsBox(1.0f, 2.0f, new Vec2(50.0f, 0.5f), 0.0f);
-		fixtureDef.shape = bbox;
-		body.createFixture(fixtureDef);
-
-		bbox.setAsBox(50.0f, 1.0f, new Vec2(0.0f, 0.5f), 0.0f);
-		fixtureDef.shape = bbox;
-		body.createFixture(fixtureDef);
-
-		bbox.setAsBox(3.0f, 0.5f, new Vec2(5.0f, 1.5f), (float)Math.PI/4);
-		fixtureDef.shape = bbox;
-		body.createFixture(fixtureDef);
-
-		bbox.setAsBox(3.0f, 0.5f, new Vec2(3.5f, 1.0f), (float)Math.PI/8);
-		fixtureDef.shape = bbox;
-		body.createFixture(fixtureDef);
-
-		bbox.setAsBox(3.0f, 0.5f, new Vec2(9.0f, 1.5f), (float)-Math.PI/4);
-		fixtureDef.shape = bbox;
-		body.createFixture(fixtureDef);
-
-		bbox.setAsBox(3.0f, 0.5f, new Vec2(10.5f, 1.0f), (float)-Math.PI/8);
-		fixtureDef.shape = bbox;
-		body.createFixture(fixtureDef);
-
-		makeParticles();
-
-
-		body.resetMassData();
-
-	}
-
-	private void makeParticles() 
-	{
-
-
-		for (int i = 0; i < 30; i++) 
+		// Simulate the world
+		//
+		
+		
+		float timeStep = 1.0f / 60.f;
+		int velocityIterations = 6;
+		int positionIterations = 2;
+		for (int i = 0; i < 60; ++i) 
 		{
-
-			PolygonShape dynamicBox = new PolygonShape();
-			dynamicBox.setAsBox(0.05f, 0.05f);
-
-			FixtureDef fd = new FixtureDef();
-			fd.density = 0.01f;
-			fd.friction = 0.1f;
-			fd.restitution = 0.5f;
-			dynamicBox.m_radius = (float) ((float) Math.random()/20+0.02);
-			fd.shape = dynamicBox;
-
-			BodyDef bd = new BodyDef();
-			bd.type = BodyType.DYNAMIC;
-			bd.position.set((float)Math.random()*35+15, 3.0f);
-			bd.allowSleep = true;
-			bd.linearDamping = 0.1f;
-			bd.angularDamping = 0.1f;
-
-
-			Body body = getWorld().createBody(bd);
-			body.createFixture(fd);
-			body.resetMassData();
+			world.step(timeStep, velocityIterations, positionIterations);
+			Vec2 position = body.getPosition();
+			float angle = body.getAngle();
+			System.out.printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
 		}
 
+		System.out.println("Done.");
 	}
-
-	@Override
-	public String getTestName() {
-		return "Level 1";
-	}
-
 }
-
-
