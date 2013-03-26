@@ -1,3 +1,4 @@
+import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 
 import org.jbox2d.common.Vec2;
@@ -7,6 +8,8 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.joints.PrismaticJoint;
 import org.jbox2d.dynamics.joints.PrismaticJointDef;
+import org.jbox2d.dynamics.joints.RevoluteJoint;
+import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.jbox2d.testbed.framework.TestbedTest;
 
 public class MJWTest2 extends TestbedTest {
@@ -85,11 +88,18 @@ public class MJWTest2 extends TestbedTest {
 	{
 
 
+
 		//make cart
 		BodyDef bd = new BodyDef();
 		bd.position.set(0.0f, 3.5f);
 
 		Body cart = getWorld().createBody(bd);
+		Body wheel1 = getWorld().createBody(bd);
+		Body wheel2 = getWorld().createBody(bd);
+		
+		
+		
+
 
 		PolygonShape bbox = new PolygonShape();
 		bbox.setAsBox(1.5f, 0.3f);
@@ -121,29 +131,82 @@ public class MJWTest2 extends TestbedTest {
 		bbox.setAsBox(0.4f, 0.1f, new Vec2((float)(-1.0f - 0.6f*Math.cos(Math.PI/3)), (float)(-0.3f - 0.6f*Math.sin(Math.PI/3))), (float) (Math.PI/3));
 		axle1.createFixture(boxDef);
 		axle1.resetMassData();
-		
+
 		PrismaticJointDef prismaticJointDef = new PrismaticJointDef();
 		prismaticJointDef.initialize(cart, axle1, axle1.getWorldCenter(), new Vec2((float)Math.cos(Math.PI/3), (float)Math.sin(Math.PI/3)));
 		prismaticJointDef.lowerTranslation = -0.3f;
 		prismaticJointDef.upperTranslation = 0.5f;
 		prismaticJointDef.enableLimit = true;
 		prismaticJointDef.enableMotor = true;
-		
+
 		PrismaticJoint spring1 = (PrismaticJoint) getWorld().createJoint(prismaticJointDef);
-		
+
 		Body axle2 = getWorld().createBody(bd);
-		
+
 		bbox.setAsBox(0.4f, 0.1f, new Vec2((float)(1.0f + 0.6f*Math.cos(-Math.PI/3)), (float)(-0.3f + 0.6f*Math.sin(-Math.PI/3))), (float) (-Math.PI/3));
 		boxDef.shape = bbox;
 		axle2.createFixture(boxDef);
 		axle2.resetMassData();
-		
+
 		prismaticJointDef.initialize(cart, axle2, axle2.getWorldCenter(), new Vec2((float)-Math.cos(Math.PI/3), (float)Math.sin(Math.PI/3)));
-		
+
 		PrismaticJoint spring2 = (PrismaticJoint) getWorld().createJoint(prismaticJointDef);
-		
+
 		//add wheels
+		CircleShape circleDef = new CircleShape();
+		circleDef.m_radius = 0.7f;
+		boxDef.density = 0.1f;
+		boxDef.friction = 5.0f;
+		boxDef.restitution = 0.2f;
+		boxDef.filter.groupIndex = -1;
+		boxDef.shape = circleDef;
+
+		for (int i = 0; i < 2; i++)
+		{
+			BodyDef circleBodyDef = new BodyDef();
+			if (i == 0)
+			{
+				circleBodyDef.position.set((float)(axle1.getWorldCenter().x - 0.3f * Math.cos(Math.PI/3)), (float)(axle1.getWorldCenter().y - 0.3f * Math.sin(Math.PI/3)));
+			}
+			else
+			{
+				circleBodyDef.position.set((float)(axle2.getWorldCenter().x + 0.3f * Math.cos(-Math.PI/3)), (float)(axle2.getWorldCenter().y + 0.3f*Math.sin(-Math.PI/3)));
+			}
+			circleBodyDef.allowSleep = false; 
+
+			if(i == 0)
+			{
+				wheel1 = getWorld().createBody(circleBodyDef);
+			}
+
+			else
+			{
+				wheel2 = getWorld().createBody(circleBodyDef);
+			}
+
+			(i == 0 ? wheel1 : wheel2).createFixture(boxDef);
+			(i == 0 ? wheel1 : wheel2).resetMassData();
+
+		}
+
+
+		//add joints
+
+		RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
+		revoluteJointDef.enableMotor = true;
 		
+		RevoluteJoint motor1 = new RevoluteJoint(getWorld().getPool(), revoluteJointDef);
+		RevoluteJoint motor2 = new RevoluteJoint(getWorld().getPool(), revoluteJointDef);
+		
+		revoluteJointDef.initialize(axle1, wheel1, wheel1.getWorldCenter());
+		motor1 = (RevoluteJoint) getWorld().createJoint(revoluteJointDef);
+		
+		revoluteJointDef.initialize(axle2, wheel2, wheel2.getWorldCenter());
+		motor2 = (RevoluteJoint) getWorld().createJoint(revoluteJointDef);
+
+
+
+
 
 
 
