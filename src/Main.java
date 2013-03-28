@@ -13,8 +13,9 @@ public class Main {
 		AudioWorld audioWorld = new AudioWorld();
 		audioWorld.simulationTest2();
 		audioWorld.simulateWorld();
-		AudioLoader audioLoader = new AudioLoader();
-		audioLoader.beginSongAnalysis();
+		
+		AudioPlayer audioPlayer = new AudioPlayer();
+		audioPlayer.beginSongAnalysis();
 		
 		
 		
