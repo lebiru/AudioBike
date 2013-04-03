@@ -16,7 +16,8 @@ public class MJWTest2 extends TestbedTest {
 
 
 	@Override
-	public void initTest(boolean argDeserialized) {
+	public void initTest(boolean argDeserialized) 
+	{
 		setTitle("Level 1");
 
 		getWorld().setGravity(new Vec2(0.0f, -10.0f));
@@ -24,24 +25,20 @@ public class MJWTest2 extends TestbedTest {
 		getWorld().setAllowSleep(doSleep);
 
 		makeLevel();
+		
 
 		
 	}
 
-	private void makeVehicle() 
+
+	private void makeLevel() 
 	{
-
-
-	}
-
-	private void makeLevel() {
 
 		BodyDef b = new BodyDef();
 		b.position.set(0.0f, 0.5f);
 
 		PolygonShape bbox = new PolygonShape();
 		bbox.setAsBox(50.0f, 0.5f);
-
 
 
 		Body body = getWorld().createBody(b);
@@ -98,10 +95,6 @@ public class MJWTest2 extends TestbedTest {
 		Body wheel1 = getWorld().createBody(bd);
 		Body wheel2 = getWorld().createBody(bd);
 		
-		
-		
-
-
 		PolygonShape bbox = new PolygonShape();
 		bbox.setAsBox(1.5f, 0.3f);
 
@@ -157,7 +150,6 @@ public class MJWTest2 extends TestbedTest {
 		CircleShape circleDef = new CircleShape();
 		circleDef.m_radius = 0.7f;
 		boxDef.density = 0.1f;
-		
 		boxDef.friction = 5.0f;
 		boxDef.restitution = 0.2f;
 		boxDef.filter.groupIndex = -1;
@@ -176,7 +168,7 @@ public class MJWTest2 extends TestbedTest {
 				circleBodyDef.position.set((float)(axle2.getWorldCenter().x + 0.3f * Math.cos(-Math.PI/3)), (float)(axle2.getWorldCenter().y + 0.3f*Math.sin(-Math.PI/3)));
 			}
 			circleBodyDef.allowSleep = false; 
-
+			
 			if(i == 0)
 			{
 				wheel1 = getWorld().createBody(circleBodyDef);
