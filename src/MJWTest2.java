@@ -23,9 +23,9 @@ public class MJWTest2 extends TestbedTest {
 		boolean doSleep = true;
 		getWorld().setAllowSleep(doSleep);
 
-		makeVehicle();
 		makeLevel();
 
+		
 	}
 
 	private void makeVehicle() 
@@ -91,6 +91,7 @@ public class MJWTest2 extends TestbedTest {
 
 		//make cart
 		BodyDef bd = new BodyDef();
+		bd.type = BodyType.DYNAMIC;
 		bd.position.set(0.0f, 3.5f);
 
 		Body cart = getWorld().createBody(bd);
@@ -156,6 +157,7 @@ public class MJWTest2 extends TestbedTest {
 		CircleShape circleDef = new CircleShape();
 		circleDef.m_radius = 0.7f;
 		boxDef.density = 0.1f;
+		
 		boxDef.friction = 5.0f;
 		boxDef.restitution = 0.2f;
 		boxDef.filter.groupIndex = -1;
@@ -164,9 +166,10 @@ public class MJWTest2 extends TestbedTest {
 		for (int i = 0; i < 2; i++)
 		{
 			BodyDef circleBodyDef = new BodyDef();
+			circleBodyDef.type = BodyType.DYNAMIC;
 			if (i == 0)
 			{
-				circleBodyDef.position.set((float)(axle1.getWorldCenter().x - 0.3f * Math.cos(Math.PI/3)), (float)(axle1.getWorldCenter().y - 0.3f * Math.sin(Math.PI/3)));
+				circleBodyDef.position.set((float)(axle1.getWorldCenter().x - (0.3f*Math.cos(Math.PI/3))), (float)(axle1.getWorldCenter().y - (0.3f * Math.sin(Math.PI/3))));
 			}
 			else
 			{
@@ -195,6 +198,7 @@ public class MJWTest2 extends TestbedTest {
 		RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
 		revoluteJointDef.enableMotor = true;
 		
+		
 		RevoluteJoint motor1 = new RevoluteJoint(getWorld().getPool(), revoluteJointDef);
 		RevoluteJoint motor2 = new RevoluteJoint(getWorld().getPool(), revoluteJointDef);
 		
@@ -205,30 +209,28 @@ public class MJWTest2 extends TestbedTest {
 		motor2 = (RevoluteJoint) getWorld().createJoint(revoluteJointDef);
 
 
-
-
-
-
-
-
 	}
 
 	private void makeParticles() 
 	{
 
+		FixtureDef particleDef = new FixtureDef();
+		particleDef.density = 0.01f;
+		particleDef.friction = 0.1f;
+		particleDef.restitution = 0.5f;
+		
+		
 
 		for (int i = 0; i < 30; i++) 
 		{
 
-			PolygonShape dynamicBox = new PolygonShape();
-			dynamicBox.setAsBox(0.05f, 0.05f);
-
-			FixtureDef fd = new FixtureDef();
-			fd.density = 0.01f;
-			fd.friction = 0.1f;
-			fd.restitution = 0.5f;
-			dynamicBox.m_radius = (float) ((float) Math.random()/20+0.02);
-			fd.shape = dynamicBox;
+			CircleShape particleShape = new CircleShape();
+			particleShape.m_radius = (float) ((float)Math.random()/20+0.02);
+			particleDef.shape = particleShape;
+			
+			BodyDef particleBD = new BodyDef();
+			particleBD.position.set((float)((float)Math.random()*35+15), 1f);
+			
 
 			BodyDef bd = new BodyDef();
 			bd.type = BodyType.DYNAMIC;
@@ -239,7 +241,7 @@ public class MJWTest2 extends TestbedTest {
 
 
 			Body body = getWorld().createBody(bd);
-			body.createFixture(fd);
+			body.createFixture(particleDef);
 			body.resetMassData();
 		}
 
