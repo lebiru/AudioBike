@@ -12,10 +12,10 @@ public class Main {
 
 		AudioWorld audioWorld = new AudioWorld();
 		audioWorld.simulationTest2();
-		//audioWorld.simulateWorld();
+		audioWorld.simulateWorld();
 		
 		AudioPlayer audioPlayer = new AudioPlayer();
-		//audioPlayer.beginSongAnalysis();
+		audioPlayer.beginSongAnalysis();
 		
 		
 		

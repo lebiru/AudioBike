@@ -19,6 +19,10 @@ public class MJWTest2 extends TestbedTest {
 
 	Body cart;
 	RevoluteJoint motor1;
+	RevoluteJoint motor2;
+	
+	PrismaticJoint spring1;
+	PrismaticJoint spring2;
 
 	//motor1 is a RevoluteJoint
 
@@ -53,8 +57,8 @@ public class MJWTest2 extends TestbedTest {
 		if (model.getKeys()['d']) 
 		{ // model also contains the coded key values
 			model.getDebugDraw().drawCircle(getWorldMouse(), 2f, Color3f.BLUE);
-			motor1.setMotorSpeed((float) (15*Math.PI) );
-			motor1.setMaxMotorTorque(17f);
+			motor2.setMotorSpeed((float) (15*Math.PI) );
+			motor2.setMaxMotorTorque(12f);
 		}
 		
 		if(model.getKeys()['w'])
@@ -69,9 +73,14 @@ public class MJWTest2 extends TestbedTest {
 				cart.applyTorque(-30f);
 			}
 			
+			else
+			{
+				cart.applyTorque(0f);
+			} 
+			
 		}
 		
-		this.setCamera(cart.getPosition(), 30f);
+		this.setCamera(cart.getPosition(), 25f);
 		
 		
 
@@ -182,7 +191,7 @@ public class MJWTest2 extends TestbedTest {
 		prismaticJointDef.enableLimit = true;
 		prismaticJointDef.enableMotor = true;
 
-		PrismaticJoint spring1 = (PrismaticJoint) getWorld().createJoint(prismaticJointDef);
+		spring1 = (PrismaticJoint) getWorld().createJoint(prismaticJointDef);
 
 		Body axle2 = getWorld().createBody(bd);
 
@@ -193,7 +202,7 @@ public class MJWTest2 extends TestbedTest {
 
 		prismaticJointDef.initialize(cart, axle2, axle2.getWorldCenter(), new Vec2((float)-Math.cos(Math.PI/3), (float)Math.sin(Math.PI/3)));
 
-		PrismaticJoint spring2 = (PrismaticJoint) getWorld().createJoint(prismaticJointDef);
+		spring2 = (PrismaticJoint) getWorld().createJoint(prismaticJointDef);
 
 		//add wheels
 		CircleShape circleDef = new CircleShape();
@@ -241,7 +250,7 @@ public class MJWTest2 extends TestbedTest {
 
 
 		motor1 = new RevoluteJoint(getWorld().getPool(), revoluteJointDef);
-		RevoluteJoint motor2 = new RevoluteJoint(getWorld().getPool(), revoluteJointDef);
+		motor2 = new RevoluteJoint(getWorld().getPool(), revoluteJointDef);
 
 		revoluteJointDef.initialize(axle1, wheel1, wheel1.getWorldCenter());
 		motor1 = (RevoluteJoint) getWorld().createJoint(revoluteJointDef);
