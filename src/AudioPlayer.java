@@ -1,13 +1,9 @@
 import java.io.*;
-
 import javax.sound.sampled.*;
-
-import com.echonest.api.v4.EchoNestAPI;
-import com.echonest.api.v4.SongParams;
 import com.mpatric.mp3agic.*;
-
 import javazoom.jl.decoder.*;
 /**
+ * This class plays the audio creates an array of the audio files waveform and gets its tempo in bpm
  *  @author abaez02.student
  */
 public class AudioPlayer {
@@ -29,7 +25,7 @@ public class AudioPlayer {
 	{
 		//read mp3 file
 		try{
-			String fileName = "/home/student/abaez02/Desktop/AudioBike/AudioBike/src/testSongs/Loveline.mp3";
+			String fileName = "/home/student/abaez02/Desktop/AudioBike/AudioBike/src/testSongs/01 - For What It's Worth (LP Version).mp3";
 		    File mp3File = new File(fileName);
 		    
 		    AudioInputStream in = AudioSystem.getAudioInputStream(mp3File);
@@ -49,15 +45,16 @@ public class AudioPlayer {
 	     	//create a array of bytes from the mp3 data
 		    byte[] audio = decode(inputStream);
             //printArray(audio);
-		   // AudioInfo songInfo = new AudioInfo();
+		    AudioInfo songInfo = new AudioInfo();
 		    
 		    //get song name and artist name 
 		   
 		    String artistName = getArtistName(fileName);
 		    String songTitle = getSongTitle(fileName);
 		    		    
+		    System.out.println("Artist: " + artistName + ", Song: " + songTitle);
 		    //get the songs tempo in bpm
-		    //songInfo.getTempo(artistName, songTitle);
+		    System.out.println(songInfo.getTempo(artistName, "For What It's Worth"));
 		    
             //play audio file
 		    rawplay(decodedFormat,din);
@@ -121,7 +118,7 @@ public class AudioPlayer {
 		}
 		
 	}
-    /**\
+    /**
      * gets the waveform data in bytes from the audio inputStream
      * @param inputStream
      * @return

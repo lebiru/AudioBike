@@ -3,9 +3,9 @@ import java.util.List;
 
 public class AudioInfo {
     private EchoNestAPI en;
-    
+    private static final String API_KEY = "5PLBCMHXPWYC1NBD4"; 
     public AudioInfo() throws EchoNestException{
-    	en = new EchoNestAPI();
+    	en = new EchoNestAPI(API_KEY);
     	en.setTraceSends(false);
     	en.setTraceRecvs(false);
     }
