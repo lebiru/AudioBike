@@ -1,6 +1,11 @@
 import java.io.*;
+
 import javax.sound.sampled.*;
-import javazoom.jl.*;
+
+import com.echonest.api.v4.EchoNestAPI;
+import com.echonest.api.v4.SongParams;
+import com.mpatric.mp3agic.*;
+
 import javazoom.jl.decoder.*;
 /**
  *  @author abaez02.student
@@ -19,12 +24,13 @@ public class AudioPlayer {
 	{
 		
 	}
-
+    
 	public void beginSongAnalysis() throws UnsupportedAudioFileException, IOException 
 	{
 		//read mp3 file
 		try{
-		    File mp3File = new File("/home/student/abaez02/Desktop/AudioBike/AudioBike/src/testSongs/Robot Death Kites - Fight Or Flight.mp3");
+			String fileName = "/home/student/abaez02/Desktop/AudioBike/AudioBike/src/testSongs/Loveline.mp3";
+		    File mp3File = new File(fileName);
 		    
 		    AudioInputStream in = AudioSystem.getAudioInputStream(mp3File);
 		    AudioInputStream din = null;
@@ -40,11 +46,22 @@ public class AudioPlayer {
 		    
 		    din = AudioSystem.getAudioInputStream(decodedFormat,in);
 
-	     	//play now
+	     	//create a array of bytes from the mp3 data
 		    byte[] audio = decode(inputStream);
-            
+            //printArray(audio);
+		   // AudioInfo songInfo = new AudioInfo();
+		    
+		    //get song name and artist name 
+		   
+		    String artistName = getArtistName(fileName);
+		    String songTitle = getSongTitle(fileName);
+		    		    
+		    //get the songs tempo in bpm
+		    //songInfo.getTempo(artistName, songTitle);
+		    
+            //play audio file
 		    rawplay(decodedFormat,din);
-	
+	        
 		    in.close();
 		}catch(Exception e)
 		{
@@ -52,6 +69,63 @@ public class AudioPlayer {
 		}
 	}
 	
+	/**
+	 * Gets the song name from a specific mp3 file
+	 * @param fileName
+	 * @return
+	 * @throws UnsupportedTagException
+	 * @throws InvalidDataException
+	 * @throws IOException
+	 */
+	private String getSongTitle(String fileName) throws UnsupportedTagException, InvalidDataException, IOException {
+		Mp3File mp3File = new Mp3File(fileName);
+		if(mp3File.hasId3v1Tag()){
+			ID3v1 id3v1Tag = mp3File.getId3v1Tag();
+			return id3v1Tag.getTitle();
+		}
+		else if(mp3File.hasId3v2Tag()){
+			ID3v2 id3v2Tag = mp3File.getId3v2Tag();
+			return id3v2Tag.getTitle();
+		}
+		return null;
+	}
+
+	/**
+	 * Gets the artists name of a specific mp3 file
+	 * @param fileName
+	 * @return
+	 * @throws IOException 
+	 * @throws InvalidDataException 
+	 * @throws UnsupportedTagException 
+	 */
+	private String getArtistName(String fileName) throws UnsupportedTagException, InvalidDataException, IOException {
+		Mp3File mp3File = new Mp3File(fileName);
+		if(mp3File.hasId3v1Tag()){
+			ID3v1 id3v1Tag = mp3File.getId3v1Tag();
+			return id3v1Tag.getArtist();
+		}
+		else if(mp3File.hasId3v2Tag()){
+			ID3v2 id3v2Tag = mp3File.getId3v2Tag();
+			return id3v2Tag.getArtist();
+		}
+		return null;
+	}
+    
+	/**
+	 * prints out an array of bytes
+	 * @param arr
+	 */
+	public void printArray(byte[] arr) {
+		for(int i = 0; i < arr.length; i++){
+			System.out.println(arr[i]);
+		}
+		
+	}
+    /**\
+     * gets the waveform data in bytes from the audio inputStream
+     * @param inputStream
+     * @return
+     */
 	private byte[] decode(InputStream inputStream) {
 
 	    ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -81,7 +155,14 @@ public class AudioPlayer {
 	    }
 	    return null;    
 	}
-
+    
+	/**\
+	 * Plays the mp3 file.
+	 * @param targetFormat
+	 * @param din
+	 * @throws IOException
+	 * @throws LineUnavailableException
+	 */
 	private void rawplay(AudioFormat targetFormat,AudioInputStream din) throws IOException, LineUnavailableException
 	{
 		byte[] data = new byte[4096];
@@ -105,7 +186,13 @@ public class AudioPlayer {
 			din.close();
 		}
 	}
-
+    
+	/**
+	 * Gets each line of data from the audio file.
+	 * @param audioFormat
+	 * @return
+	 * @throws LineUnavailableException
+	 */
 	private SourceDataLine getLine(AudioFormat audioFormat) throws LineUnavailableException {
 
 		SourceDataLine res = null;
