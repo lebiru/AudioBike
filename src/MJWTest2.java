@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Color3f;
@@ -36,8 +38,7 @@ public class MJWTest2 extends TestbedTest {
 		getWorld().setAllowSleep(doSleep);
 
 		makeLevel();
-
-
+		makeHills();
 
 	}
 
@@ -109,43 +110,25 @@ public class MJWTest2 extends TestbedTest {
 		bbox.setAsBox(50.0f, 0.5f);
 
 
-		Body cart = getWorld().createBody(b);
+		Body body = getWorld().createBody(b);
 		FixtureDef fixtureDef = new FixtureDef();
 
-		bbox.setAsBox(1.0f, 2.0f, new Vec2(-50.0f, 0.5f), 0.0f);
-		fixtureDef.shape = bbox;
-		cart.createFixture(fixtureDef);
-
-		bbox.setAsBox(1.0f, 2.0f, new Vec2(50.0f, 0.5f), 0.0f);
-		fixtureDef.shape = bbox;
-		cart.createFixture(fixtureDef);
-
+		//this is the ground
 		bbox.setAsBox(50.0f, 1.0f, new Vec2(0.0f, 0.5f), 0.0f);
 		fixtureDef.shape = bbox;
-		cart.createFixture(fixtureDef);
+		body.createFixture(fixtureDef);
 
+		//this is the big left to right ramp
 		bbox.setAsBox(3.0f, 0.5f, new Vec2(5.0f, 1.5f), (float)Math.PI/4);
 		fixtureDef.shape = bbox;
-		cart.createFixture(fixtureDef);
-
-		bbox.setAsBox(3.0f, 0.5f, new Vec2(3.5f, 1.0f), (float)Math.PI/8);
-		fixtureDef.shape = bbox;
-		cart.createFixture(fixtureDef);
-
-		bbox.setAsBox(3.0f, 0.5f, new Vec2(9.0f, 1.5f), (float)-Math.PI/4);
-		fixtureDef.shape = bbox;
-		cart.createFixture(fixtureDef);
-
-		bbox.setAsBox(3.0f, 0.5f, new Vec2(10.5f, 1.0f), (float)-Math.PI/8);
-		fixtureDef.shape = bbox;
-		cart.createFixture(fixtureDef);
+		body.createFixture(fixtureDef);
 
 		makeParticles();
 
 		makeBike();
 
 
-		cart.resetMassData();
+		body.resetMassData();
 
 	}
 
@@ -306,9 +289,58 @@ public class MJWTest2 extends TestbedTest {
 		}
 
 	}
+	
+	private ArrayList makeHills()
+	{
+		/*
+		 * freqValues: the frequency of the song. The longer the 
+		 * song is, the longer the arraylist/level of the game
+		 */
+		ArrayList<Integer> freqValues = new ArrayList<Integer>();
+		
+		freqValues.add(20);
+		freqValues.add(-10);
+		freqValues.add(30);
+		freqValues.add(5);
+		freqValues.add(20);
+		freqValues.add(-80);
+		freqValues.add(80);
+		freqValues.add(20);
+		
+		BodyDef b = new BodyDef();
+		//the location of our sandbox to define
+		b.position.set(10.0f, 0.5f);
+		
+		PolygonShape bbox = new PolygonShape();
+		//100 units wide, 1 unit tall
+		//dont know what the hell this is
+		bbox.setAsBox(50.0f, 0.5f);
+		
+		Body body = getWorld().createBody(b);
+		FixtureDef fixtureDef = new FixtureDef();
+		
+		//makes the box
+		/*First argument: width of box
+		 * Second argument: height of box
+		 * Third argument: Vector offset of box
+		 * The last argument is the angle, counterclockwise
+		 */
+		
+		bbox.setAsBox(10f, 10f, new Vec2(10f, 10f), 0f);
+		fixtureDef.shape = bbox;
+		body.createFixture(fixtureDef);
+		
+		body.resetMassData();
+		
+		
+		
+		return null;
+		
+	}
 
 	@Override
-	public String getTestName() {
+	public String getTestName() 
+	{
 		return "Level 1";
 	}
 

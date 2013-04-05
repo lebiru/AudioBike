@@ -34,6 +34,8 @@ public class AudioWorld {
 		
 		TestbedModel model = new TestbedModel();         // create our model
 		
+		
+		
 		// add tests
 		TestList.populateModel(model);                   // populate the provided testbed tests
 		model.addCategory("AudioBike");             // add a category
@@ -45,9 +47,12 @@ public class AudioWorld {
 
 		TestbedPanel panel = new TestPanelJ2D(model);    // create our testbed panel
 
+		
 		JFrame testbed = new TestbedFrame(model, panel); // put both into our testbed frame
-		// etc
 		testbed.setVisible(true);
+		//change the size of the window
+		testbed.setBounds(0, 0, 2000, 1000);
+		testbed.setEnabled(true);
 		testbed.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
