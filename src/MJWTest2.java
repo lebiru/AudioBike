@@ -46,38 +46,42 @@ public class MJWTest2 extends TestbedTest {
 	{
 		super.step(settings);
 
+		//40 is down arrow, so "s"
+		//38 is up arrow, so "w"
+		//37 is left arrow, so "a"
+		//39 is right arrow, so "d"
+		
 		TestbedModel model = super.getModel();
-		if (model.getKeys()['a']) 
+		if (model.getKeys()['s']) 
 		{ // model also contains the coded key values
-			model.getDebugDraw().drawCircle(getWorldMouse(), 2f, Color3f.GREEN);
 			motor1.setMotorSpeed((float) (15*Math.PI) );
 			motor1.setMaxMotorTorque(17f);
+			motor2.setMotorSpeed((float) (15*Math.PI)*1 );
+			motor2.setMaxMotorTorque(12f);
 		}
 
-		if (model.getKeys()['d']) 
+		if (model.getKeys()['w']) 
 		{ // model also contains the coded key values
-			model.getDebugDraw().drawCircle(getWorldMouse(), 2f, Color3f.BLUE);
-			motor2.setMotorSpeed((float) (15*Math.PI) );
+			motor1.setMotorSpeed((float) (15*Math.PI)*-1 );
+			motor1.setMaxMotorTorque(17f);
+			motor2.setMotorSpeed((float) (15*Math.PI)*-1 );
 			motor2.setMaxMotorTorque(12f);
 		}
 		
-		if(model.getKeys()['w'])
+		if(!model.getKeys()['w'] && !model.getKeys()['s'])
 		{
-			if(model.getKeys()['a'])
-			{
-				cart.applyTorque(30f);
-			}
-			
-			else if(model.getKeys()['d'])
-			{
-				cart.applyTorque(-30f);
-			}
-			
-			else
-			{
-				cart.applyTorque(0f);
-			} 
-			
+			motor1.setMaxMotorTorque(0.5f);
+			motor2.setMaxMotorTorque(0.5f);
+		}
+		
+
+		if(model.getKeys()['a'])
+		{
+			cart.applyTorque(30);
+		}
+		else if(model.getKeys()['d'])
+		{
+			cart.applyTorque(-30);
 		}
 		
 		spring1.setMaxMotorForce((float) (30f+Math.abs(800*Math.pow(spring1.getJointTranslation(), 2))));
