@@ -80,6 +80,12 @@ public class MJWTest2 extends TestbedTest {
 			
 		}
 		
+		spring1.setMaxMotorForce((float) (30f+Math.abs(800*Math.pow(spring1.getJointTranslation(), 2))));
+		spring1.setMotorSpeed((float) ((spring1.getMotorSpeed() - 10*spring1.getJointTranslation())*0.4));
+		
+		spring2.setMaxMotorForce((float) (30f+Math.abs(800*Math.pow(spring2.getJointTranslation(), 2))));
+		spring2.setMotorSpeed((float) (-4 * Math.pow(spring2.getJointTranslation(), 1)));
+		
 		this.setCamera(cart.getPosition(), 25f);
 		
 		
