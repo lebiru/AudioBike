@@ -295,11 +295,7 @@ public class MJWTest2 extends TestbedTest {
 	private ArrayList makeHills()
 	{
 	
-		Vec2 vs[] = null;
-		vs[0] = new Vec2(1.7f, 0.0f);
-		vs[1] = new Vec2(1.0f, 0.25f);
-		vs[2] = new Vec2(0.0f, 0.0f);
-		vs[3] = new Vec2(-1.7f, 0.4f);
+		
 		
 		//use chainshape
 		
