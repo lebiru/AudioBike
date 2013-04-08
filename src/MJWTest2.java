@@ -13,9 +13,11 @@ import org.jbox2d.dynamics.joints.PrismaticJoint;
 import org.jbox2d.dynamics.joints.PrismaticJointDef;
 import org.jbox2d.dynamics.joints.RevoluteJoint;
 import org.jbox2d.dynamics.joints.RevoluteJointDef;
+import org.jbox2d.pooling.arrays.Vec2Array;
 import org.jbox2d.testbed.framework.TestbedModel;
 import org.jbox2d.testbed.framework.TestbedSettings;
 import org.jbox2d.testbed.framework.TestbedTest;
+import org.jbox2d.testbed.tests.Chain;
 
 public class MJWTest2 extends TestbedTest {
 
@@ -292,48 +294,18 @@ public class MJWTest2 extends TestbedTest {
 	
 	private ArrayList makeHills()
 	{
-		/*
-		 * freqValues: the frequency of the song. The longer the 
-		 * song is, the longer the arraylist/level of the game
-		 */
-		ArrayList<Integer> freqValues = new ArrayList<Integer>();
+	
+		Vec2 vs[] = null;
+		vs[0] = new Vec2(1.7f, 0.0f);
+		vs[1] = new Vec2(1.0f, 0.25f);
+		vs[2] = new Vec2(0.0f, 0.0f);
+		vs[3] = new Vec2(-1.7f, 0.4f);
 		
-		freqValues.add(20);
-		freqValues.add(-10);
-		freqValues.add(30);
-		freqValues.add(5);
-		freqValues.add(20);
-		freqValues.add(-80);
-		freqValues.add(80);
-		freqValues.add(20);
+		//use chainshape
 		
-		BodyDef b = new BodyDef();
-		//the location of our sandbox to define
-		b.position.set(10.0f, 0.5f);
-		
-		PolygonShape bbox = new PolygonShape();
-		//100 units wide, 1 unit tall
-		//dont know what the hell this is
-		bbox.setAsBox(50.0f, 0.5f);
-		
-		Body body = getWorld().createBody(b);
-		FixtureDef fixtureDef = new FixtureDef();
-		
-		//makes the box
-		/*First argument: width of box
-		 * Second argument: height of box
-		 * Third argument: Vector offset of box
-		 * The last argument is the angle, counterclockwise
-		 */
-		
-		bbox.setAsBox(10f, 10f, new Vec2(10f, 10f), 0f);
-		fixtureDef.shape = bbox;
-		body.createFixture(fixtureDef);
-		
-		body.resetMassData();
-		
-		
-		
+//		ChainShape chain = new ChainShape();
+//		chain.createChain(vs, vs.length);
+//		
 		return null;
 		
 	}
