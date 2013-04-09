@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
@@ -37,22 +38,26 @@ public class AudioWorld {
 		
 		
 		// add tests
-		TestList.populateModel(model);                   // populate the provided testbed tests
+		//TestList.populateModel(model);                   // populate the provided testbed tests
+
 		model.addCategory("AudioBike");             // add a category
 		model.addTest(new MJWTest2());                // add our test
+		
 		
 
 		// add our custom setting "My Range Setting", with a default value of 10, between 0 and 20
 		model.getSettings().addSetting(new TestbedSetting("My Range Setting", SettingType.ENGINE, 10, 0, 20));
 
 		TestbedPanel panel = new TestPanelJ2D(model);    // create our testbed panel
-
 		
 		JFrame testbed = new TestbedFrame(model, panel); // put both into our testbed frame
 		testbed.setVisible(true);
 		//change the size of the window
 		testbed.setBounds(0, 0, 2000, 1000);
 		testbed.setEnabled(true);
+		
+		
+		
 		testbed.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		

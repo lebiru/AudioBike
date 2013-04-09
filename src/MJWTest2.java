@@ -116,12 +116,18 @@ public class MJWTest2 extends TestbedTest {
 		FixtureDef fixtureDef = new FixtureDef();
 
 		//this is the ground
-		bbox.setAsBox(50.0f, 1.0f, new Vec2(0.0f, 0.5f), 0.0f);
+		bbox.setAsBox(10.0f, 1.0f, new Vec2(0.0f, 0.5f), 0.0f);
 		fixtureDef.shape = bbox;
 		body.createFixture(fixtureDef);
+		
+		//this is the left wall
+		bbox.setAsBox(1.0f, 3.0f, new Vec2(-10.0f, 0.5f), 0.0f);
+		fixtureDef.shape = bbox;
+		body.createFixture(fixtureDef);
+		
 
 		//this is the big left to right ramp
-		bbox.setAsBox(3.0f, 0.5f, new Vec2(5.0f, 1.5f), (float)Math.PI/4);
+		bbox.setAsBox(3.0f, 0.5f, new Vec2(10.0f, 1.5f), (float)Math.PI/4);
 		fixtureDef.shape = bbox;
 		body.createFixture(fixtureDef);
 
@@ -297,11 +303,6 @@ public class MJWTest2 extends TestbedTest {
 	
 		
 		
-		//use chainshape
-		
-//		ChainShape chain = new ChainShape();
-//		chain.createChain(vs, vs.length);
-//		
 		return null;
 		
 	}
