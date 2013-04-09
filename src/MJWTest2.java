@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -24,9 +25,13 @@ public class MJWTest2 extends TestbedTest {
 	Body cart;
 	RevoluteJoint motor1;
 	RevoluteJoint motor2;
-	
+
 	PrismaticJoint spring1;
 	PrismaticJoint spring2;
+
+	BodyDef sandbox = new BodyDef();
+	PolygonShape sandboxbox = new PolygonShape();
+	FixtureDef hill = new FixtureDef();
 
 	//motor1 is a RevoluteJoint
 
@@ -53,7 +58,7 @@ public class MJWTest2 extends TestbedTest {
 		//38 is up arrow, so "w"
 		//37 is left arrow, so "a"
 		//39 is right arrow, so "d"
-		
+
 		TestbedModel model = super.getModel();
 		if (model.getKeys()['s']) 
 		{ // model also contains the coded key values
@@ -70,13 +75,13 @@ public class MJWTest2 extends TestbedTest {
 			motor2.setMotorSpeed((float) (15*Math.PI)*-1 );
 			motor2.setMaxMotorTorque(12f);
 		}
-		
+
 		if(!model.getKeys()['w'] && !model.getKeys()['s'])
 		{
 			motor1.setMaxMotorTorque(0.5f);
 			motor2.setMaxMotorTorque(0.5f);
 		}
-		
+
 
 		if(model.getKeys()['a'])
 		{
@@ -86,16 +91,16 @@ public class MJWTest2 extends TestbedTest {
 		{
 			cart.applyTorque(-30);
 		}
-		
+
 		spring1.setMaxMotorForce((float) (30f+Math.abs(800*Math.pow(spring1.getJointTranslation(), 2))));
 		spring1.setMotorSpeed((float) ((spring1.getMotorSpeed() - 10*spring1.getJointTranslation())*0.4));
-		
+
 		spring2.setMaxMotorForce((float) (30f+Math.abs(800*Math.pow(spring2.getJointTranslation(), 2))));
 		spring2.setMotorSpeed((float) (-4 * Math.pow(spring2.getJointTranslation(), 1)));
-		
+
 		this.setCamera(cart.getPosition(), 25f);
-		
-		
+
+
 
 
 
@@ -119,19 +124,13 @@ public class MJWTest2 extends TestbedTest {
 		bbox.setAsBox(10.0f, 1.0f, new Vec2(0.0f, 0.5f), 0.0f);
 		fixtureDef.shape = bbox;
 		body.createFixture(fixtureDef);
-		
+
 		//this is the left wall
 		bbox.setAsBox(1.0f, 3.0f, new Vec2(-10.0f, 0.5f), 0.0f);
 		fixtureDef.shape = bbox;
 		body.createFixture(fixtureDef);
-		
 
-		//this is the big left to right ramp
-		bbox.setAsBox(3.0f, 0.5f, new Vec2(10.0f, 1.5f), (float)Math.PI/4);
-		fixtureDef.shape = bbox;
-		body.createFixture(fixtureDef);
-
-		makeParticles();
+		//makeParticles();
 
 		makeBike();
 
@@ -297,14 +296,72 @@ public class MJWTest2 extends TestbedTest {
 		}
 
 	}
-	
+
+	/**
+	 * This function creates the levels in the game
+	 * @return
+	 */
 	private ArrayList makeHills()
 	{
-	
-		
-		
+
+		Body hillMaker = getWorld().createBody(sandbox);
+
+		ArrayList<Integer> audioSample = new ArrayList<Integer>();
+		audioSample = generateHills(audioSample, 1000);
+
+		//try making them into circles?
+
+		float sizeX = 0.1f;
+		float sizeY = 0.1f;
+		//anchors: starting positions
+		float anchorX = 11f;
+		float anchorY = 1f;
+		//how much space we add between blocks
+		float offsetX = 0.2f;
+		float offsetY = 0.2f;
+		int dampningFactor = 0; //integer that we will divide the array by 
+
+		//first argument: width of the box
+		//second argument: height of the box
+		//third argument: location relative to ? to place the box
+		//forth argument: rotation of the box
+
+		for(int i = 0; i < audioSample.size(); i++)
+		{
+			sandboxbox.setAsBox(sizeX, sizeY, new Vec2(anchorX, anchorY), 0.0f);
+			hill.shape = sandboxbox;
+			hillMaker.createFixture(hill);
+			if(i != (audioSample.size()-1) && audioSample.get(i+1) > audioSample.get(i))
+			{
+				anchorY += offsetY;
+			}
+			else
+			{
+				anchorY -= offsetY;
+			}
+			anchorX += offsetX;
+
+		}
+
+
+
+
 		return null;
-		
+
+	}
+
+	private ArrayList<Integer> generateHills(ArrayList<Integer> audioSample, int size) 
+	{
+		Random r = new Random();
+
+		for(int i = 0; i < size; i++)
+		{
+			audioSample.add(r.nextInt(200));
+		}
+
+
+		return audioSample;
+
 	}
 
 	@Override

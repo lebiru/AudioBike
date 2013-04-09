@@ -1,16 +1,4 @@
-import java.awt.Color;
-import java.awt.Graphics;
-
 import javax.swing.JFrame;
-
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.FixtureDef;
-import org.jbox2d.dynamics.World;
-import org.jbox2d.testbed.framework.TestList;
 import org.jbox2d.testbed.framework.TestbedFrame;
 import org.jbox2d.testbed.framework.TestbedModel;
 import org.jbox2d.testbed.framework.TestbedPanel;
@@ -53,10 +41,10 @@ public class AudioWorld {
 		JFrame testbed = new TestbedFrame(model, panel); // put both into our testbed frame
 		testbed.setVisible(true);
 		//change the size of the window
-		testbed.setBounds(0, 0, 2000, 1000);
+		testbed.setBounds(0, 0, 2000, 2000);
 		testbed.setEnabled(true);
 		
-		
+	
 		
 		testbed.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
