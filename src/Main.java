@@ -16,12 +16,12 @@ public class Main {
        
 		String fileName = "/home/student/abaez02/Desktop/AudioBike/AudioBike/src/testSongs/01 - For What It's Worth (LP Version).mp3";
 		
-        AudioLoader audioLoader = new AudioLoader(fileName);
-        audioLoader.beginSongAnalysis();
-        byte[] waveform = audioLoader.audioArr;
-        audioLoader.printArray(waveform);
-        double bpm = audioLoader.findTempo();
-        System.out.println(bpm);
+//        AudioLoader audioLoader = new AudioLoader(fileName);
+//        audioLoader.beginSongAnalysis();
+//        byte[] waveform = audioLoader.audioArr;
+//        audioLoader.printArray(waveform);
+//        double bpm = audioLoader.findTempo();
+//        System.out.println(bpm);
 		AudioWorld audioWorld = new AudioWorld();
 		audioWorld.simulationTest2();
 		audioWorld.simulateWorld();

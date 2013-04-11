@@ -307,10 +307,61 @@ public class MJWTest2 extends TestbedTest {
 		Body hillMaker = getWorld().createBody(sandbox);
 
 		ArrayList<Integer> audioSample = new ArrayList<Integer>();
-		audioSample = generateHills(audioSample, 1000);
+		audioSample = generateHills(audioSample, 500);
 
-		//try making them into circles?
+		/* CIRCLES METHOD */
+		float sizeX = 0.1f;
+		float sizeY = 0.1f;
+		//anchors: starting positions
+		float anchorX = 11f;
+		float anchorY = 1f;
+		//how much space we add between blocks
+		float offsetX = 0.2f;
+		float offsetY = 0.2f;
+		int dampningFactor = 0; //integer that we will divide the array by 
 
+		FixtureDef particleDef = new FixtureDef();
+		particleDef.density = 0.01f;
+		particleDef.friction = 0.1f;
+		particleDef.restitution = 0.5f;
+		
+		float radius = 0.2f;
+		
+		
+		for(int i = 0; i < audioSample.size(); i++)
+		{
+			CircleShape particleShape = new CircleShape();
+			particleShape.m_radius = radius;
+			particleDef.shape = particleShape;
+
+			BodyDef particleBD = new BodyDef();
+			particleBD.position.set(11f, 4f);
+			if(i != (audioSample.size()-1) && audioSample.get(i+1) > audioSample.get(i))
+			{
+				anchorY += offsetY;
+			}
+			else
+			{
+				anchorY -= offsetY;
+			}
+			anchorX += offsetX;
+
+			BodyDef bd = new BodyDef();
+			bd.type = BodyType.STATIC;
+			bd.position.set(anchorX + offsetX, anchorY + offsetY);
+			bd.allowSleep = true;
+			bd.linearDamping = 0.1f;
+			bd.angularDamping = 0.1f;
+
+
+			Body body = getWorld().createBody(bd);
+			body.createFixture(particleDef);
+			body.resetMassData();
+
+		}
+
+		
+		/* SQUARES METHOD
 		float sizeX = 0.1f;
 		float sizeY = 0.1f;
 		//anchors: starting positions
@@ -342,6 +393,7 @@ public class MJWTest2 extends TestbedTest {
 			anchorX += offsetX;
 
 		}
+		 */
 
 
 
