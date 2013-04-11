@@ -20,6 +20,8 @@ import org.jbox2d.testbed.framework.TestbedSettings;
 import org.jbox2d.testbed.framework.TestbedTest;
 import org.jbox2d.testbed.tests.Chain;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 public class MJWTest2 extends TestbedTest {
 
 	Body cart;
@@ -32,7 +34,7 @@ public class MJWTest2 extends TestbedTest {
 	BodyDef sandbox = new BodyDef();
 	PolygonShape sandboxbox = new PolygonShape();
 	FixtureDef hill = new FixtureDef();
-
+	
 	//motor1 is a RevoluteJoint
 
 	@Override
@@ -133,16 +135,12 @@ public class MJWTest2 extends TestbedTest {
 		//makeParticles();
 
 		makeBike();
-
-
 		body.resetMassData();
 
 	}
 
 	private void makeBike() 
 	{
-
-
 
 		//make cart
 		BodyDef bd = new BodyDef();
@@ -269,8 +267,6 @@ public class MJWTest2 extends TestbedTest {
 		particleDef.friction = 0.1f;
 		particleDef.restitution = 0.5f;
 
-
-
 		for (int i = 0; i < 30; i++) 
 		{
 
@@ -307,8 +303,12 @@ public class MJWTest2 extends TestbedTest {
 		Body hillMaker = getWorld().createBody(sandbox);
 
 		ArrayList<Integer> audioSample = new ArrayList<Integer>();
+		
 		audioSample = generateHills(audioSample, 500);
-
+		byte[] waveform2 = compressWaveform(Global.waveform);
+		
+		
+		
 		/* CIRCLES METHOD */
 		float sizeX = 0.1f;
 		float sizeY = 0.1f;
@@ -328,7 +328,7 @@ public class MJWTest2 extends TestbedTest {
 		float radius = 0.2f;
 		
 		
-		for(int i = 0; i < audioSample.size(); i++)
+		for(int i = 0; i < waveform2.length; i++)
 		{
 			CircleShape particleShape = new CircleShape();
 			particleShape.m_radius = radius;
@@ -336,13 +336,17 @@ public class MJWTest2 extends TestbedTest {
 
 			BodyDef particleBD = new BodyDef();
 			particleBD.position.set(11f, 4f);
-			if(i != (audioSample.size()-1) && audioSample.get(i+1) > audioSample.get(i))
+			if(i != (waveform2.length-1) && waveform2[i+1] > waveform2[i])
 			{
 				anchorY += offsetY;
 			}
-			else
+			else if(i != (waveform2.length-1) && waveform2[i+1] < waveform2[i])
 			{
 				anchorY -= offsetY;
+			}
+			else
+			{
+				anchorY = anchorY; //if the next one is == to the current one
 			}
 			anchorX += offsetX;
 
@@ -360,46 +364,34 @@ public class MJWTest2 extends TestbedTest {
 
 		}
 
-		
-		/* SQUARES METHOD
-		float sizeX = 0.1f;
-		float sizeY = 0.1f;
-		//anchors: starting positions
-		float anchorX = 11f;
-		float anchorY = 1f;
-		//how much space we add between blocks
-		float offsetX = 0.2f;
-		float offsetY = 0.2f;
-		int dampningFactor = 0; //integer that we will divide the array by 
-
-		//first argument: width of the box
-		//second argument: height of the box
-		//third argument: location relative to ? to place the box
-		//forth argument: rotation of the box
-
-		for(int i = 0; i < audioSample.size(); i++)
-		{
-			sandboxbox.setAsBox(sizeX, sizeY, new Vec2(anchorX, anchorY), 0.0f);
-			hill.shape = sandboxbox;
-			hillMaker.createFixture(hill);
-			if(i != (audioSample.size()-1) && audioSample.get(i+1) > audioSample.get(i))
-			{
-				anchorY += offsetY;
-			}
-			else
-			{
-				anchorY -= offsetY;
-			}
-			anchorX += offsetX;
-
-		}
-		 */
-
-
-
-
 		return null;
 
+	}
+
+	
+	private byte[] compressWaveform(byte[] waveform) {
+		
+		//sum from start to checkpoint of signal[i]^2/(2*(end-start))
+		//average of the powers is the zero
+		
+		int damping = 20000;
+		
+		byte[] waveform2 = new byte[waveform.length/damping]; // 
+		System.out.println(waveform2.length);
+		
+		int counter = 0;
+		for(int i = 0; i < waveform.length; i+= damping)
+		{
+			System.out.println(i);
+			System.out.println(waveform[i]);
+			//waveform2[counter] = waveform[i];
+			counter++;
+			
+			
+		}
+		System.out.println(counter);
+		return waveform2;
+		
 	}
 
 	private ArrayList<Integer> generateHills(ArrayList<Integer> audioSample, int size) 
