@@ -34,7 +34,7 @@ public class MJWTest2 extends TestbedTest {
 	BodyDef sandbox = new BodyDef();
 	PolygonShape sandboxbox = new PolygonShape();
 	FixtureDef hill = new FixtureDef();
-	
+
 	//motor1 is a RevoluteJoint
 
 	@Override
@@ -303,12 +303,12 @@ public class MJWTest2 extends TestbedTest {
 		Body hillMaker = getWorld().createBody(sandbox);
 
 		ArrayList<Integer> audioSample = new ArrayList<Integer>();
-		
+
 		audioSample = generateHills(audioSample, 500);
-		byte[] waveform2 = compressWaveform(Global.waveform);
-		
-		
-		
+		int[] waveform2 = compressWaveform(Global.waveform);
+
+
+
 		/* CIRCLES METHOD */
 		float sizeX = 0.1f;
 		float sizeY = 0.1f;
@@ -324,10 +324,10 @@ public class MJWTest2 extends TestbedTest {
 		particleDef.density = 0.01f;
 		particleDef.friction = 0.1f;
 		particleDef.restitution = 0.5f;
-		
+
 		float radius = 0.2f;
-		
-		
+
+
 		for(int i = 0; i < waveform2.length; i++)
 		{
 			CircleShape particleShape = new CircleShape();
@@ -368,30 +368,41 @@ public class MJWTest2 extends TestbedTest {
 
 	}
 
-	
-	private byte[] compressWaveform(byte[] waveform) {
-		
+
+	private int[] compressWaveform(byte[] waveform) {
+
 		//sum from start to checkpoint of signal[i]^2/(2*(end-start))
 		//average of the powers is the zero
+
+		int damping = 200000;
+		int chunks = waveform.length/damping; //number of data pieces in each chunks
+		int[] powers = new int[damping]; // copying the array
 		
-		int damping = 20000;
+		System.out.println(powers.length);
+
 		
-		byte[] waveform2 = new byte[waveform.length/damping]; // 
-		System.out.println(waveform2.length);
-		
-		int counter = 0;
-		for(int i = 0; i < waveform.length; i+= damping)
+		for(int i = 0; i < chunks; i++) // for the array
 		{
-			System.out.println(i);
-			System.out.println(waveform[i]);
-			//waveform2[counter] = waveform[i];
-			counter++;
-			
-			
+
+			long sumPower = 0;
+			for(int j = i*chunks; j < (i+1)*chunks; j++) //for each Summation
+			{
+				//do the summation
+				powers[i] += waveform[j]*waveform[j];
+
+			}
+			//insert
+			powers[i] /= 2*chunks;
+
 		}
-		System.out.println(counter);
-		return waveform2;
-		
+
+		System.out.println(powers.length);
+		for(int i : powers)
+		{
+			System.out.println(powers[i]);
+		}
+		return powers;
+
 	}
 
 	private ArrayList<Integer> generateHills(ArrayList<Integer> audioSample, int size) 
