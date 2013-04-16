@@ -300,14 +300,19 @@ public class MJWTest2 extends TestbedTest {
 	private ArrayList makeHills()
 	{
 
+		
 		Body hillMaker = getWorld().createBody(sandbox);
-
-		ArrayList<Integer> audioSample = new ArrayList<Integer>();
-
-		audioSample = generateHills(audioSample, 500);
+//		
+//		for(int i = 0; i < Global.waveform.length; i++)
+//		{
+//			//System.out.println(Global.waveform[i]);
+//			
+//		}	
+		System.out.println("----------------");
+		
 		int[] waveform2 = compressWaveform(Global.waveform);
-
-
+		System.out.println("here");
+		System.out.println(waveform2.length);
 
 		/* CIRCLES METHOD */
 		float sizeX = 0.1f;
@@ -326,7 +331,6 @@ public class MJWTest2 extends TestbedTest {
 		particleDef.restitution = 0.5f;
 
 		float radius = 0.2f;
-
 
 		for(int i = 0; i < waveform2.length; i++)
 		{
@@ -357,11 +361,9 @@ public class MJWTest2 extends TestbedTest {
 			bd.linearDamping = 0.1f;
 			bd.angularDamping = 0.1f;
 
-
 			Body body = getWorld().createBody(bd);
 			body.createFixture(particleDef);
 			body.resetMassData();
-
 		}
 
 		return null;
@@ -374,33 +376,35 @@ public class MJWTest2 extends TestbedTest {
 		//sum from start to checkpoint of signal[i]^2/(2*(end-start))
 		//average of the powers is the zero
 
-		int damping = 200000;
-		int chunks = waveform.length/damping; //number of data pieces in each chunks
-		int[] powers = new int[damping]; // copying the array
+		int damping = 50000; //TODO figure out good damping number
+		int chunks = waveform.length/damping; //number of data pieces in each chunks     141 == CHUNKS
+		int[] powers = new int[chunks]; // copying the array
 		
-		System.out.println(powers.length);
+		//System.out.println(powers.length);
 
 		
-		for(int i = 0; i < chunks; i++) // for the array
+		for(int i = 0; i < chunks; i++) // for each CHUNK
 		{
-
-			long sumPower = 0;
-			for(int j = i*chunks; j < (i+1)*chunks; j++) //for each Summation
+			long sumOfPowers = 0;
+			//System.out.println("This is chunk " + i + ".");
+			for(int j = damping*i; j < damping*(i+1); j++) //for each Summation
 			{
+				//System.out.println("Element j: " + waveform[j]);
 				//do the summation
-				powers[i] += waveform[j]*waveform[j];
-
+				sumOfPowers += waveform[j]*waveform[j];
+				
 			}
-			//insert
-			powers[i] /= 2*chunks;
+			//System.out.println("Sum of chunk " + i + ": " + sumOfPowers);
+			//System.out.println("----------------------------");
+			powers[i] = (int) (sumOfPowers/chunks);
 
 		}
 
 		System.out.println(powers.length);
-		for(int i : powers)
-		{
-			System.out.println(powers[i]);
-		}
+//		for(int i : powers)
+//		{
+//			System.out.println(powers[i]);
+//		}
 		return powers;
 
 	}
