@@ -18,10 +18,12 @@ public class Main {
 		
         AudioLoader audioLoader = new AudioLoader(fileName);
         audioLoader.beginSongAnalysis();
+        
         byte[] waveform = audioLoader.audioArr;
-        audioLoader.printArray(waveform);
         double bpm = audioLoader.findTempo();
+        
         System.out.println(bpm);
+        System.out.println(waveform.length);
 		AudioWorld audioWorld = new AudioWorld();
 		audioWorld.simulationTest2();
 		audioWorld.simulateWorld();

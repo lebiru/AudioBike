@@ -82,13 +82,15 @@ public class AudioLoader {
 	              }
 	            bitstream.closeFrame();
 	        } 
-	        return os.toByteArray();
+	        byte[] array = os.toByteArray();
+
+	        return array;
 	    }catch(Exception e){
 	          e.printStackTrace();
 	    }
 	    return null;   
 	}
-	
+
 	/**
 	 * Gets the artists name of a specific mp3 file
 	 * @param fileName

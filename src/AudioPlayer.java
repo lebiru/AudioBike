@@ -9,10 +9,7 @@ import com.mpatric.mp3agic.*;
 public class AudioPlayer {
 
 	String fileName;
-	
-	
-	
-	
+
 	/**
 	 * @param args
 	 * @throws IOException 
@@ -26,6 +23,11 @@ public class AudioPlayer {
 		this.fileName = fileName;
 	}
     
+	/**
+	 * Plays an audio file by reading it line by line.
+	 * @throws UnsupportedAudioFileException
+	 * @throws IOException
+	 */
 	public void playSong() throws UnsupportedAudioFileException, IOException 
 	{
 		//read mp3 file
