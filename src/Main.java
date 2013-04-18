@@ -26,7 +26,7 @@ public class Main {
 		audioWorld.simulationTest2();
 		audioWorld.simulateWorld();
 		
-		System.out.println(Global.waveform.length);
+		
 		//audioLoader.printArray(Global.waveform);
 		
 		AudioPlayer audioPlayer = new AudioPlayer(fileName);

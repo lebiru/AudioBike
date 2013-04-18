@@ -24,6 +24,7 @@ public class AudioLoader {
 	    
 	    //create waveform data
 	    this.audioArr = decodeAudio();
+	    
 	}
 
 	public void beginSongAnalysis() throws EchoNestException, UnsupportedTagException, InvalidDataException, IOException {
