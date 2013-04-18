@@ -289,17 +289,6 @@ public class MJWTest2 extends TestbedTest {
 	 */
 	private ArrayList makeHills()
 	{
-
-<<<<<<< HEAD
-		Body hillMaker = getWorld().createBody(sandbox);
-
-		ArrayList<Integer> audioSample = new ArrayList<Integer>();
-		
-		audioSample = generateHills(audioSample, 500);
-		int[] waveform2 = compressWaveform(Global.waveform);
-		
-=======
->>>>>>> 4b3ca04b42c4e625853e9e4773d6b3425a9d157a
 		
 		Body hillMaker = getWorld().createBody(sandbox);
 //		
@@ -370,15 +359,7 @@ public class MJWTest2 extends TestbedTest {
 
 	}
 
-<<<<<<< HEAD
-	
 	private int[] compressWaveform(byte[] waveform) {
-		
-=======
-
-	private int[] compressWaveform(byte[] waveform) {
-
->>>>>>> 4b3ca04b42c4e625853e9e4773d6b3425a9d157a
 		//sum from start to checkpoint of signal[i]^2/(2*(end-start))
 		//average of the powers is the zero
 
@@ -386,21 +367,6 @@ public class MJWTest2 extends TestbedTest {
 		int chunks = waveform.length/damping; //number of data pieces in each chunks     141 == CHUNKS
 		int[] powers = new int[chunks]; // copying the array
 		
-<<<<<<< HEAD
-		int damping = 20000;
-		int chunks = waveform.length/damping;
-		int[] waveformSquared = new int[chunks];
-		
-		for(int i = 0; i < waveform.length; i+= damping)
-		{
-			System.out.println("elemnt = " + i);
-			System.out.println("value = " + waveform[i]);
-			//waveform2[counter] = waveform[i];	
-		}
-		
-		return waveformSquared;
-		
-=======
 		//System.out.println(powers.length);
 
 		
@@ -428,7 +394,6 @@ public class MJWTest2 extends TestbedTest {
 //		}
 		return powers;
 
->>>>>>> 4b3ca04b42c4e625853e9e4773d6b3425a9d157a
 	}
 
 	private ArrayList<Integer> generateHills(ArrayList<Integer> audioSample, int size) 
