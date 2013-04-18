@@ -28,6 +28,10 @@ public class MJWTest2 extends TestbedTest {
 	BodyDef sandbox = new BodyDef();
 	PolygonShape sandboxbox = new PolygonShape();
 	FixtureDef hill = new FixtureDef();
+	
+	int score = 0;
+	int lives = 3; //start out with 3 health
+	boolean livesMutable = true;
 
 	//motor1 is a RevoluteJoint
 
@@ -42,6 +46,9 @@ public class MJWTest2 extends TestbedTest {
 
 		makeLevel();
 		makeHills();
+		
+		
+		
 
 	}
 
@@ -55,7 +62,25 @@ public class MJWTest2 extends TestbedTest {
 		//37 is left arrow, so "a"
 		//39 is right arrow, so "d"
 
+		
+		super.addTextLine("SCORE: " + score);
+		super.addTextLine("Lives: " + lives);
+		
+		
+		
 		TestbedModel model = super.getModel();
+		
+		if(model.getKeys()['r'] && livesMutable == true)
+		{
+			lives--;
+			livesMutable = false;
+		}
+		
+		else if(!model.getKeys()['r'])
+		{
+			livesMutable = true;
+		}
+		
 		if (model.getKeys()['s']) 
 		{ // model also contains the coded key values
 			motor1.setMotorSpeed((float) (15*Math.PI) );
@@ -291,12 +316,7 @@ public class MJWTest2 extends TestbedTest {
 	{
 		
 		Body hillMaker = getWorld().createBody(sandbox);
-//		
-//		for(int i = 0; i < Global.waveform.length; i++)
-//		{
-//			//System.out.println(Global.waveform[i]);
-//			
-//		}	
+
 		System.out.println("----------------");
 		
 		int[] waveform2 = compressWaveform(Global.waveform);
