@@ -5,8 +5,6 @@ import com.echonest.api.v4.EchoNestException;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 
-
-
 public class Main {
 
 	public static void main(String[] args) throws IOException, UnsupportedAudioFileException, UnsupportedTagException, InvalidDataException, EchoNestException
@@ -14,22 +12,26 @@ public class Main {
 		
 		System.out.println("AudioBike!");
        
-		String fileName = "/home/student/abaez02/Desktop/AudioBike/AudioBike/src/testSongs/01 - For What It's Worth (LP Version).mp3";
+		String fileName = "/home/student/babdulnabi/AudioBike/src/testSongs/01 - For What It's Worth (LP Version).mp3";
 		
         AudioLoader audioLoader = new AudioLoader(fileName);
         audioLoader.beginSongAnalysis();
+        Global.waveform = audioLoader.audioArr;
         
-        byte[] waveform = audioLoader.audioArr;
+        //audioLoader.printArray(waveform);
         double bpm = audioLoader.findTempo();
-        
-        System.out.println(bpm);
-        System.out.println(waveform.length);
+        //System.out.println(bpm);
+
 		AudioWorld audioWorld = new AudioWorld();
 		audioWorld.simulationTest2();
 		audioWorld.simulateWorld();
 		
+		System.out.println(Global.waveform.length);
+		//audioLoader.printArray(Global.waveform);
+		
 		AudioPlayer audioPlayer = new AudioPlayer(fileName);
 		audioPlayer.playSong();	
+		
 
 
 	}
