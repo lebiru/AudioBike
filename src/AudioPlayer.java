@@ -71,6 +71,7 @@ public class AudioPlayer {
 		if(line != null){
 		    //start playing audio file
 			line.start();
+			@SuppressWarnings("unused")
 			int nBytesRead = 0, nBytesWritten = 0;
 			while(nBytesRead != -1){
 				nBytesRead = din.read(data,0,data.length);

@@ -363,7 +363,7 @@ public class MJWTest2 extends TestbedTest {
 		//sum from start to checkpoint of signal[i]^2/(2*(end-start))
 		//average of the powers is the zero
 
-		int damping = 50000; //TODO figure out good damping number
+		int damping = 20000; //TODO figure out good damping number
 		int chunks = waveform.length/damping; //number of data pieces in each chunks     141 == CHUNKS
 		int[] powers = new int[chunks]; // copying the array
 		
