@@ -19,7 +19,7 @@ public class Main {
         audioLoader.beginSongAnalysis();
         Global.waveform = audioLoader.audioArr;
         
-		AudioWorld audioWorld = new AudioWorld();
+		AudioWorld audioWorld = new AudioWorld(audioLoader);
 		audioWorld.simulationTest2();
 		audioWorld.simulateWorld();
 		

@@ -2,6 +2,7 @@ import com.echonest.api.v4.*;
 import java.io.*;
 import java.util.List;
 
+
 public class GetAudioInfo {
     private EchoNestAPI en;
     private static final String API_KEY = "5PLBCMHXPWYC1NBD4"; 
@@ -77,14 +78,8 @@ public class GetAudioInfo {
                 titleName += splitTitle[i];
                 p.set("title", titleName);
                 
-                if(en.searchSongs(p).size() > 0){
-                    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                    String input = "";
-                    System.out.println("Is (" + titleName + ") the song you want (y/n)?");
-                    input = br.readLine();
-                    
-                    if(input.contains("y")) return titleName;                    
-                }               
+                if(en.searchSongs(p).size() > 0) return titleName;                    
+                               
                 titleName += " ";
             }
         }

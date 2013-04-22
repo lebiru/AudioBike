@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 import java.util.Random;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -14,7 +15,6 @@ import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.jbox2d.testbed.framework.TestbedModel;
 import org.jbox2d.testbed.framework.TestbedSettings;
 import org.jbox2d.testbed.framework.TestbedTest;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class MJWTest2 extends TestbedTest {
 
@@ -34,7 +34,13 @@ public class MJWTest2 extends TestbedTest {
 	boolean livesMutable = true;
 
 	//motor1 is a RevoluteJoint
-
+    AudioLoader audioLoader;
+	
+    
+    public MJWTest2(AudioLoader audioLoader){
+    	this.audioLoader = audioLoader;
+    }
+    
 	@Override
 	public void initTest(boolean argDeserialized) 
 	{
@@ -65,8 +71,8 @@ public class MJWTest2 extends TestbedTest {
 		
 		super.addTextLine("SCORE: " + score);
 		super.addTextLine("Lives: " + lives);
-		
-		
+		super.addTextLine("Artist: " + audioLoader.artistName);
+		super.addTextLine("Song Name: " + audioLoader.songTitle);
 		
 		TestbedModel model = super.getModel();
 		
