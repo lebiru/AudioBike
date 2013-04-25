@@ -42,10 +42,9 @@ public class Main extends Application{
 		FileChooser fileChooser = new FileChooser();
 		String fileName = fileChooser.getFileName();
 
-		AudioLoader audioLoader = new AudioLoader(fileName);
-		audioLoader.beginSongAnalysis();
-		Global.waveform = audioLoader.audioArr;
-
+        AudioLoader audioLoader = new AudioLoader(fileName);
+        Global.waveform = audioLoader.audioArr;
+        
 		AudioWorld audioWorld = new AudioWorld(audioLoader);
 		audioWorld.simulationTest2();
 		audioWorld.simulateWorld();

@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Random;
@@ -15,6 +16,9 @@ import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.jbox2d.testbed.framework.TestbedModel;
 import org.jbox2d.testbed.framework.TestbedSettings;
 import org.jbox2d.testbed.framework.TestbedTest;
+
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
 
 public class MJWTest2 extends TestbedTest {
 
@@ -71,8 +75,30 @@ public class MJWTest2 extends TestbedTest {
 		
 		super.addTextLine("SCORE: " + score);
 		super.addTextLine("Lives: " + lives);
-		super.addTextLine("Artist: " + audioLoader.artistName);
-		super.addTextLine("Song Name: " + audioLoader.songTitle);
+		try {
+			super.addTextLine("Artist: " + audioLoader.getArtistName());
+		} catch (UnsupportedTagException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			super.addTextLine("Song Name: " + audioLoader.getSongTitle());
+		} catch (UnsupportedTagException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		TestbedModel model = super.getModel();
 		
