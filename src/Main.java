@@ -18,6 +18,7 @@ import javafx.util.Duration;
 
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.testbed.framework.TestbedModel;
 
 
 import com.echonest.api.v4.EchoNestException;
@@ -30,9 +31,6 @@ public class Main extends Application{
 	{
 
 		Application.launch(args);
-
-
-
 
 	}
 
@@ -54,10 +52,6 @@ public class Main extends Application{
 		Global.waveform = audioLoader.audioArr;
 
 
-		//		AudioWorld audioWorld = new AudioWorld(audioLoader);
-		//		audioWorld.simulationTest2();
-		//		audioWorld.simulateWorld();
-
 		//		AudioPlayer audioPlayer = new AudioPlayer(fileName);
 		//		audioPlayer.playSong();	
 
@@ -71,16 +65,20 @@ public class Main extends Application{
 		 * Generate balls and position them on random locations.  
 		 * Random locations between 5 to 95 on x axis and between 100 to 500 on y axis 
 		 */
-		for(int i=0;i<Utils.NO_OF_BALLS;i++) {
+		for(int i=0;i<Utils.NO_OF_BALLS;i++) 
+		{
 			ball[i]=new Ball(r.nextInt(90)+5,r.nextInt(400)+100);
 		}
 
 		//Add ground to the application, this is where balls will land
-		Utils.addGround(100, 10);
+		
+		Utils.addGround(100, 50);
 
 		//Add left and right walls so balls will not move outside the viewing area.
 		Utils.addWall(0,100,1,100); //Left wall
 		Utils.addWall(99,100,1,100); //Right wall
+		
+		Utils.constructWorld();
 
 
 
@@ -96,20 +94,22 @@ public class Main extends Application{
 				Utils.world.step(1.0f/60.f, 8, 3); 
 
 				//Move balls to the new position computed by JBox2D
-				for(int i=0;i<Utils.NO_OF_BALLS;i++) {
+				for(int i=0;i<Utils.NO_OF_BALLS;i++) 
+				{
 					Body body = (Body)ball[i].node.getUserData();
 					float xpos = Utils.toPixelPosX(body.getPosition().x);
 					float ypos = Utils.toPixelPosY(body.getPosition().y);
 					ball[i].node.setLayoutX(xpos);
 					ball[i].node.setLayoutY(ypos);
-				}
+				}	
+				
 			}
 		};
 
 
 		/**
 		 * Set ActionEvent and duration to the KeyFrame. 
-		 * The ActionEvent is trigged when KeyFrame execution is over. 
+		 * The ActionEvent is triggered when KeyFrame execution is over. 
 		 */
 		KeyFrame frame = new KeyFrame(duration, ae, null,null);
 
@@ -149,6 +149,7 @@ public class Main extends Application{
 			}
 		};
 
+		
 		scene.setOnMouseDragged(addHurdle);
 
 		primaryStage.setScene(scene);

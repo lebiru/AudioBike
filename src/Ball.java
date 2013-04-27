@@ -73,7 +73,7 @@ public class Ball{
        
         ball.setCache(true); //Cache this object for better performance
         
-        //Create an JBox2D body defination for ball.
+        //Create an JBox2D body definition for ball.
         BodyDef bd = new BodyDef();
         bd.type = bodyType;
         bd.position.set(posX, posY);
@@ -95,6 +95,7 @@ public class Ball{
         Body body = Utils.world.createBody(bd);
         body.createFixture(fd);
         ball.setUserData(body);
+        
         return ball;
     }
 }

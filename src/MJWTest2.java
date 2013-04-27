@@ -41,7 +41,8 @@ public class MJWTest2 extends TestbedTest {
     AudioLoader audioLoader;
 	
     
-    public MJWTest2(AudioLoader audioLoader){
+    public MJWTest2(AudioLoader audioLoader)
+    {
     	this.audioLoader = audioLoader;
     }
     
