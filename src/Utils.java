@@ -18,7 +18,7 @@ import org.jbox2d.dynamics.World;
 public class Utils 
 {
 
-	
+
 	static Cart cart;
 	int score = 0;
 	int lives = 3; //start out with 3 health
@@ -54,14 +54,14 @@ public class Utils
 
 		BodyDef bd = new BodyDef();
 		bd.position= new Vec2(0.0f,-10f);
-	
+
 
 		world.createBody(bd).createFixture(fd);
 	}
 
 	private static void makeLevel() 
 	{
-		
+
 		Rectangle r = new Rectangle();
 		r.setFill(Color.RED);
 
@@ -83,31 +83,31 @@ public class Utils
 		fixtureDef.shape = bbox;
 		body.createFixture(fixtureDef);
 		r.setUserData(body);
-		
+
 
 		//this is the left wall
 		bbox.setAsBox(1.0f, 3.0f, new Vec2(-10.0f, 0.5f), 0.0f);
 		fixtureDef.shape = bbox;
 		body.createFixture(fixtureDef);
 		r.setUserData(body);
-		
-		
-		
+
+
+
 
 		//makeParticles();
 
 		addCart();
-		
+
 		body.resetMassData();
 
 	}
-	
+
 	public static void addCart()
 	{
 		cart = new Cart();
-		
+
 	}
-	
+
 	//This method creates a walls. 
 	public static void addWall(float posX, float posY, float width, float height){
 		PolygonShape ps = new PolygonShape();
@@ -120,7 +120,7 @@ public class Utils
 
 		BodyDef bd = new BodyDef();
 		bd.position.set(posX, posY);
-		
+
 
 		Utils.world.createBody(bd).createFixture(fd);
 	}
@@ -134,7 +134,7 @@ public class Utils
 			return new LinearGradient(0.0, 0.0, 1.0, 0.0, true, CycleMethod.NO_CYCLE, new Stop[] { new Stop(0, Color.WHITE), new Stop(1, color)});
 	}
 
-	
+
 
 	public static void constructWorld()
 	{
@@ -249,41 +249,43 @@ public class Utils
 
 	}
 
-	
-	
+
+
 	//Convert a JBox2D x coordinate to a JavaFX pixel x coordinate
-		public static float toPixelPosX(float posX) {
-			float x = WIDTH*posX / 100.0f;
-			return x;
-		}
+	public static float toPixelPosX(float posX) {
+		float x = WIDTH*posX / 100.0f;
+		return x;
+	}
 
-		//Convert a JavaFX pixel x coordinate to a JBox2D x coordinate
-		public static float toPosX(float posX) {
-			float x =   (posX*100.0f*1.0f)/WIDTH;
-			return x;
-		}
+	//Convert a JBox2D y coordinate to a JavaFX pixel y coordinate
+	public static float toPixelPosY(float posY) {
+		float y = HEIGHT - (1.0f*HEIGHT) * posY / 100.0f;
+		return y;
+	}
 
-		//Convert a JBox2D y coordinate to a JavaFX pixel y coordinate
-		public static float toPixelPosY(float posY) {
-			float y = HEIGHT - (1.0f*HEIGHT) * posY / 100.0f;
-			return y;
-		}
 
-		//Convert a JavaFX pixel y coordinate to a JBox2D y coordinate
-		public static float toPosY(float posY) {
-			float y = 100.0f - ((posY * 100*1.0f) /HEIGHT) ;
-			return y;
-		}
+	//Convert a JavaFX pixel x coordinate to a JBox2D x coordinate
+	public static float toPosX(float posX) {
+		float x =   (posX*100.0f*1.0f)/WIDTH;
+		return x;
+	}
 
-		//Convert a JBox2D width to pixel width
-		public static float toPixelWidth(float width) {
-			return WIDTH*width / 100.0f;
-		}
 
-		//Convert a JBox2D height to pixel height
-		public static float toPixelHeight(float height) {
-			return HEIGHT*height/100.0f;
-		}
+	//Convert a JavaFX pixel y coordinate to a JBox2D y coordinate
+	public static float toPosY(float posY) {
+		float y = 100.0f - ((posY * 100*1.0f) /HEIGHT) ;
+		return y;
+	}
+
+	//Convert a JBox2D width to pixel width
+	public static float toPixelWidth(float width) {
+		return WIDTH*width / 100.0f;
+	}
+
+	//Convert a JBox2D height to pixel height
+	public static float toPixelHeight(float height) {
+		return HEIGHT*height/100.0f;
+	}
 
 }
 

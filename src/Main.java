@@ -80,13 +80,9 @@ public class Main extends Application{
 		}
 
 
-		Block rect = new Block(10.0f, 200.0f, 10.0f, 50.0f, BodyType.STATIC, Color.RED);
+		Block rect = new Block(10.0f, 20.0f, 50.0f, 80.0f, BodyType.STATIC, Color.RED);
 		root.getChildren().add(rect.node);
-		
 
-		
-
-		
 		Utils.addCart();
 		
 		Utils.constructWorld();
@@ -162,11 +158,7 @@ public class Main extends Application{
 		};
 
 		
-		scene.setOnMouseDragged(addHurdle);
-		scene.setFill(Color.BLUE);
-		
-		
-		
+		scene.setOnMouseDragged(addHurdle);		
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

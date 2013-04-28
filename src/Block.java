@@ -40,17 +40,17 @@ public class Block {
 		rect.setHeight(height);
 		rect.setFill(this.color);
 
-		rect.setLayoutX(Utils.toPixelPosX(width));
-		rect.setLayoutY(Utils.toPixelPosY(height));
+		rect.setLayoutX(Utils.toPixelPosX(posX));
+		rect.setLayoutY(Utils.toPixelPosY(posY));
 		
 		
 		BodyDef b = new BodyDef();
 		b.type = bodyType;
-		b.position.set(width, height);
+		b.position.set(0.0f, 0.0f);
 
 		
 		PolygonShape bbox = new PolygonShape();
-		bbox.setAsBox(width * 0.1f, height *0.1f, new Vec2(0.0f, 0.5f), 0.0f);
+		bbox.setAsBox((width/2) * 0.1f, (height/2) *0.1f, new Vec2(posX + ((width/2) * 0.1f), posY - ((height/2) *0.1f)), 0.0f);
 
 		FixtureDef fixtureDef = new FixtureDef();
 
