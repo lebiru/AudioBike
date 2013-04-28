@@ -3,7 +3,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 import org.jbox2d.collision.shapes.CircleShape;
@@ -14,22 +13,11 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
-import org.jbox2d.dynamics.joints.PrismaticJoint;
-import org.jbox2d.dynamics.joints.PrismaticJointDef;
-import org.jbox2d.dynamics.joints.RevoluteJoint;
-import org.jbox2d.dynamics.joints.RevoluteJointDef;
 
-/**
- *
- * @author dilip
- */
+
 public class Utils 
 {
 
-
-
-	//PolygonShape sandboxbox = new PolygonShape();
-	//FixtureDef hill = new FixtureDef();
 	
 	static Cart cart;
 	int score = 0;
@@ -50,7 +38,7 @@ public class Utils
 	public static final int BALL_SIZE = 8;
 
 	//Total number of balls
-	public final static int NO_OF_BALLS = 5; 
+	public final static int NO_OF_BALLS = 100; 
 
 	//Ball gradient
 	private final static LinearGradient BALL_GRADIENT = new LinearGradient(0.0, 0.0, 1.0, 0.0, true, CycleMethod.NO_CYCLE, new Stop[] { new Stop(0, Color.WHITE), new Stop(1, Color.RED)});
@@ -60,15 +48,66 @@ public class Utils
 		PolygonShape ps = new PolygonShape();
 		ps.setAsBox(width,height);
 
+
 		FixtureDef fd = new FixtureDef();
 		fd.shape = ps;
 
 		BodyDef bd = new BodyDef();
 		bd.position= new Vec2(0.0f,-10f);
+	
 
 		world.createBody(bd).createFixture(fd);
 	}
 
+	private static void makeLevel() 
+	{
+		
+		Rectangle r = new Rectangle();
+		r.setFill(Color.RED);
+
+		BodyDef b = new BodyDef();
+		b.position.set(0.0f, 0.5f);
+		r.setLayoutX(0.0f);
+		r.setLayoutY(0.5f);
+
+
+		PolygonShape bbox = new PolygonShape();
+		bbox.setAsBox(50.0f, 0.5f);
+
+
+		Body body = Utils.world.createBody(b);
+		FixtureDef fixtureDef = new FixtureDef();
+
+		//this is the ground
+		bbox.setAsBox(10.0f, 1.0f, new Vec2(0.0f, 0.5f), 0.0f);
+		fixtureDef.shape = bbox;
+		body.createFixture(fixtureDef);
+		r.setUserData(body);
+		
+
+		//this is the left wall
+		bbox.setAsBox(1.0f, 3.0f, new Vec2(-10.0f, 0.5f), 0.0f);
+		fixtureDef.shape = bbox;
+		body.createFixture(fixtureDef);
+		r.setUserData(body);
+		
+		
+		
+
+		//makeParticles();
+
+		addCart();
+		
+		body.resetMassData();
+
+	}
+	
+	public static void addCart()
+	{
+		cart = new Cart();
+		
+	}
+	
 	//This method creates a walls. 
 	public static void addWall(float posX, float posY, float width, float height){
 		PolygonShape ps = new PolygonShape();
@@ -81,7 +120,6 @@ public class Utils
 
 		BodyDef bd = new BodyDef();
 		bd.position.set(posX, posY);
-		
 		
 
 		Utils.world.createBody(bd).createFixture(fd);
@@ -96,39 +134,7 @@ public class Utils
 			return new LinearGradient(0.0, 0.0, 1.0, 0.0, true, CycleMethod.NO_CYCLE, new Stop[] { new Stop(0, Color.WHITE), new Stop(1, color)});
 	}
 
-	//Convert a JBox2D x coordinate to a JavaFX pixel x coordinate
-	public static float toPixelPosX(float posX) {
-		float x = WIDTH*posX / 100.0f;
-		return x;
-	}
-
-	//Convert a JavaFX pixel x coordinate to a JBox2D x coordinate
-	public static float toPosX(float posX) {
-		float x =   (posX*100.0f*1.0f)/WIDTH;
-		return x;
-	}
-
-	//Convert a JBox2D y coordinate to a JavaFX pixel y coordinate
-	public static float toPixelPosY(float posY) {
-		float y = HEIGHT - (1.0f*HEIGHT) * posY / 100.0f;
-		return y;
-	}
-
-	//Convert a JavaFX pixel y coordinate to a JBox2D y coordinate
-	public static float toPosY(float posY) {
-		float y = 100.0f - ((posY * 100*1.0f) /HEIGHT) ;
-		return y;
-	}
-
-	//Convert a JBox2D width to pixel width
-	public static float toPixelWidth(float width) {
-		return WIDTH*width / 100.0f;
-	}
-
-	//Convert a JBox2D height to pixel height
-	public static float toPixelHeight(float height) {
-		return HEIGHT*height/100.0f;
-	}
+	
 
 	public static void constructWorld()
 	{
@@ -243,37 +249,41 @@ public class Utils
 
 	}
 
-	private static void makeLevel() 
-	{
+	
+	
+	//Convert a JBox2D x coordinate to a JavaFX pixel x coordinate
+		public static float toPixelPosX(float posX) {
+			float x = WIDTH*posX / 100.0f;
+			return x;
+		}
 
-		BodyDef b = new BodyDef();
-		b.position.set(0.0f, 0.5f);
+		//Convert a JavaFX pixel x coordinate to a JBox2D x coordinate
+		public static float toPosX(float posX) {
+			float x =   (posX*100.0f*1.0f)/WIDTH;
+			return x;
+		}
 
-		PolygonShape bbox = new PolygonShape();
-		bbox.setAsBox(50.0f, 0.5f);
+		//Convert a JBox2D y coordinate to a JavaFX pixel y coordinate
+		public static float toPixelPosY(float posY) {
+			float y = HEIGHT - (1.0f*HEIGHT) * posY / 100.0f;
+			return y;
+		}
 
+		//Convert a JavaFX pixel y coordinate to a JBox2D y coordinate
+		public static float toPosY(float posY) {
+			float y = 100.0f - ((posY * 100*1.0f) /HEIGHT) ;
+			return y;
+		}
 
-		Body body = Utils.world.createBody(b);
-		FixtureDef fixtureDef = new FixtureDef();
+		//Convert a JBox2D width to pixel width
+		public static float toPixelWidth(float width) {
+			return WIDTH*width / 100.0f;
+		}
 
-		//this is the ground
-		bbox.setAsBox(10.0f, 1.0f, new Vec2(0.0f, 0.5f), 0.0f);
-		fixtureDef.shape = bbox;
-		body.createFixture(fixtureDef);
-
-		//this is the left wall
-		bbox.setAsBox(1.0f, 3.0f, new Vec2(-10.0f, 0.5f), 0.0f);
-		fixtureDef.shape = bbox;
-		body.createFixture(fixtureDef);
-		
-		
-
-		//makeParticles();
-
-		cart = new Cart();
-		body.resetMassData();
-
-	}
+		//Convert a JBox2D height to pixel height
+		public static float toPixelHeight(float height) {
+			return HEIGHT*height/100.0f;
+		}
 
 }
 

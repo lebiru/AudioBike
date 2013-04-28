@@ -4,6 +4,7 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -163,6 +164,7 @@ public class Cart {
 		motor2 = (RevoluteJoint) Utils.world.createJoint(revoluteJointDef);
 		
 		node = makeNode();
+		
 
 	}
 

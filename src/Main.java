@@ -8,17 +8,26 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.collision.shapes.ShapeType;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.testbed.framework.TestbedModel;
+import org.jbox2d.dynamics.FixtureDef;
 
 
 import com.echonest.api.v4.EchoNestException;
@@ -70,13 +79,15 @@ public class Main extends Application{
 			ball[i]=new Ball(r.nextInt(90)+5,r.nextInt(400)+100);
 		}
 
-		//Add ground to the application, this is where balls will land
-		
-		Utils.addGround(100, 50);
 
-		//Add left and right walls so balls will not move outside the viewing area.
-		Utils.addWall(0,100,1,100); //Left wall
-		Utils.addWall(99,100,1,100); //Right wall
+		Block rect = new Block(10.0f, 200.0f, 10.0f, 50.0f, BodyType.STATIC, Color.RED);
+		root.getChildren().add(rect.node);
+		
+
+		
+
+		
+		Utils.addCart();
 		
 		Utils.constructWorld();
 
@@ -129,6 +140,7 @@ public class Main extends Application{
 
 		//Add button to the root group
 		root.getChildren().add(btn);
+		
 
 		//Add all balls to the root group
 		for(int i=0;i<Utils.NO_OF_BALLS;i++) {
@@ -143,7 +155,7 @@ public class Main extends Application{
 				float dragY = (float)me.getSceneY();
 
 				//Draw ball on this location. Set balls body type to static.
-				Ball hurdle = new Ball(Utils.toPosX(dragX), Utils.toPosY(dragY),2,BodyType.STATIC,Color.BLUE);
+				Ball hurdle = new Ball(Utils.toPosX(dragX), Utils.toPosY(dragY),5,BodyType.STATIC,Color.GREEN);
 				//Add ball to the root group
 				root.getChildren().add(hurdle.node);
 			}
@@ -151,7 +163,10 @@ public class Main extends Application{
 
 		
 		scene.setOnMouseDragged(addHurdle);
-
+		scene.setFill(Color.BLUE);
+		
+		
+		
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
