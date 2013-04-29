@@ -76,11 +76,11 @@ public class MJWTest2 extends TestbedTest {
 		
 		super.addTextLine("SCORE: " + score);
 		super.addTextLine("Lives: " + lives);
-<<<<<<< HEAD
+
 		
 		TestbedModel model = super.getModel();
 		
-=======
+
 		try {
 			super.addTextLine("Artist: " + audioLoader.getArtistName());
 		} catch (UnsupportedTagException e) {
@@ -105,7 +105,7 @@ public class MJWTest2 extends TestbedTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
->>>>>>> 172867ce238f0424c1960a0a6cf4d066aef7624a
+
 		
 		
 		if(model.getKeys()['r'] && livesMutable == true)
