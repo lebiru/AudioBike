@@ -3,7 +3,11 @@ import javax.swing.JFileChooser;
 
 
 
-
+/**
+ * Opens a file dialog window allowing the user to choose a song
+ * @author abaez02.student
+ *
+ */
 public class FileChooser {
 	
 	File musicFile;
@@ -11,7 +15,10 @@ public class FileChooser {
     public FileChooser(){
     	this.musicFile = chooseFile();
     }
-	
+	/**
+	 * Opens file dialog window
+	 * @return
+	 */
 	private File chooseFile(){
 		final JFileChooser fileChooser = new JFileChooser();
 		int returnVal = fileChooser.showOpenDialog(null);
@@ -23,6 +30,10 @@ public class FileChooser {
 	    return null;
 	}
 	
+	/**
+	 * Get the path name of the file
+	 * @return
+	 */
 	public String getFileName() {
 		String fileName = musicFile.getPath();
 		System.out.println(fileName);

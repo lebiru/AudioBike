@@ -1,4 +1,6 @@
+import java.io.IOException;
 import java.util.ArrayList;
+
 import java.util.Random;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -14,7 +16,9 @@ import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.jbox2d.testbed.framework.TestbedModel;
 import org.jbox2d.testbed.framework.TestbedSettings;
 import org.jbox2d.testbed.framework.TestbedTest;
-import com.sun.org.apache.bcel.internal.generic.NEW;
+
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
 
 public class MJWTest2 extends TestbedTest {
 
@@ -34,7 +38,14 @@ public class MJWTest2 extends TestbedTest {
 	boolean livesMutable = true;
 
 	//motor1 is a RevoluteJoint
-
+    AudioLoader audioLoader;
+	
+    
+    public MJWTest2(AudioLoader audioLoader)
+    {
+    	this.audioLoader = audioLoader;
+    }
+    
 	@Override
 	public void initTest(boolean argDeserialized) 
 	{
@@ -65,9 +76,36 @@ public class MJWTest2 extends TestbedTest {
 		
 		super.addTextLine("SCORE: " + score);
 		super.addTextLine("Lives: " + lives);
+<<<<<<< HEAD
 		
 		TestbedModel model = super.getModel();
 		
+=======
+		try {
+			super.addTextLine("Artist: " + audioLoader.getArtistName());
+		} catch (UnsupportedTagException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			super.addTextLine("Song Name: " + audioLoader.getSongTitle());
+		} catch (UnsupportedTagException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+>>>>>>> 172867ce238f0424c1960a0a6cf4d066aef7624a
 		
 		
 		if(model.getKeys()['r'] && livesMutable == true)
