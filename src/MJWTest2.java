@@ -41,7 +41,8 @@ public class MJWTest2 extends TestbedTest {
     AudioLoader audioLoader;
 	
     
-    public MJWTest2(AudioLoader audioLoader){
+    public MJWTest2(AudioLoader audioLoader)
+    {
     	this.audioLoader = audioLoader;
     }
     
@@ -75,6 +76,11 @@ public class MJWTest2 extends TestbedTest {
 		
 		super.addTextLine("SCORE: " + score);
 		super.addTextLine("Lives: " + lives);
+
+		
+		TestbedModel model = super.getModel();
+		
+
 		try {
 			super.addTextLine("Artist: " + audioLoader.getArtistName());
 		} catch (UnsupportedTagException e) {
@@ -99,8 +105,8 @@ public class MJWTest2 extends TestbedTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		
-		TestbedModel model = super.getModel();
 		
 		if(model.getKeys()['r'] && livesMutable == true)
 		{
@@ -411,41 +417,23 @@ public class MJWTest2 extends TestbedTest {
 
 	}
 
-	private int[] compressWaveform(byte[] waveform) {
-		//sum from start to checkpoint of signal[i]^2/(2*(end-start))
-		//average of the powers is the zero
+	private int[] compressWaveform(byte[] waveform) 
+	{
 
 		int damping = 20000; //TODO figure out good damping number
 		int chunks = waveform.length/damping; //number of data pieces in each chunks     141 == CHUNKS
 		int[] powers = new int[chunks]; // copying the array
-		
-		//System.out.println(powers.length);
-
-		
 		for(int i = 0; i < chunks; i++) // for each CHUNK
 		{
 			long sumOfPowers = 0;
-			//System.out.println("This is chunk " + i + ".");
 			for(int j = damping*i; j < damping*(i+1); j++) //for each Summation
 			{
-				//System.out.println("Element j: " + waveform[j]);
-				//do the summation
 				sumOfPowers += waveform[j]*waveform[j];
-				
 			}
-			//System.out.println("Sum of chunk " + i + ": " + sumOfPowers);
-			//System.out.println("----------------------------");
 			powers[i] = (int) (sumOfPowers/chunks);
-
 		}
-
-		System.out.println(powers.length);
-//		for(int i : powers)
-//		{
-//			System.out.println(powers[i]);
-//		}
+		
 		return powers;
-
 	}
 
 	private ArrayList<Integer> generateHills(ArrayList<Integer> audioSample, int size) 
