@@ -9,7 +9,7 @@ public class Main {
 	public static void main(String[] args) throws IOException, UnsupportedAudioFileException, UnsupportedTagException, InvalidDataException
 	{
 		
-		System.out.println("AudioBike!!");
+		System.out.println("AudioBike!");
         
 		FileChooser fileChooser = new FileChooser();
 		String fileName = fileChooser.getFileName();
