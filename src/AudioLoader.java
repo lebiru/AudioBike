@@ -1,5 +1,4 @@
 import java.io.*;
-import com.echonest.api.v4.EchoNestException;
 import com.mpatric.mp3agic.*;
 import javazoom.jl.decoder.*;
 

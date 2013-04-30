@@ -1,13 +1,12 @@
 import java.io.IOException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
-import com.echonest.api.v4.EchoNestException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException, UnsupportedAudioFileException, UnsupportedTagException, InvalidDataException, EchoNestException
+	public static void main(String[] args) throws IOException, UnsupportedAudioFileException, UnsupportedTagException, InvalidDataException
 	{
 		
 		System.out.println("AudioBike!");
