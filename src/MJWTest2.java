@@ -81,13 +81,19 @@ public class MJWTest2 extends TestbedTest {
 		super.addTextLine("Lives: " + lives);
 
 		super.addTextLine("Total Time: " + songDuration);
+        int minutes = (int) (time/60);
+        int seconds = (int) (time%60);
+        
+        if(seconds < 10){
+        	super.addTextLine("TIME: " + minutes + ":" + 0 + seconds );
+        }
+        else{
+        	super.addTextLine("TIME: " + minutes + ":" + seconds);
+        }
 
-		super.addTextLine("TIME: " + time);
-		
+		time = songDuration/2.2 - ((System.currentTimeMillis() - beginTime) / 1000);
+   
 
-		time = songDuration - ((System.currentTimeMillis() - beginTime) / 1000);
-
-		
 		if(lives == 0)
 		{
 			super.addTextLine("GAME OVER");
