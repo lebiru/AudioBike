@@ -17,6 +17,7 @@ import org.jbox2d.testbed.framework.TestbedModel;
 import org.jbox2d.testbed.framework.TestbedSettings;
 import org.jbox2d.testbed.framework.TestbedTest;
 
+import com.echonest.api.v4.EchoNestException;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 
@@ -33,17 +34,19 @@ public class MJWTest2 extends TestbedTest {
 	PolygonShape sandboxbox = new PolygonShape();
 	FixtureDef hill = new FixtureDef();
 	
-	int score = 0;
-	int lives = 3; //start out with 3 health
+	private int score = 0;
+	private int lives = 3; //start out with 3 health
 	boolean livesMutable = true;
 
 	//motor1 is a RevoluteJoint
     AudioLoader audioLoader;
+	private double songDuration;
 	
     
-    public MJWTest2(AudioLoader audioLoader)
+    public MJWTest2(AudioLoader audioLoader) throws EchoNestException
     {
     	this.audioLoader = audioLoader;
+    	this.songDuration = audioLoader.findDuration();
     }
     
 	@Override
@@ -76,7 +79,7 @@ public class MJWTest2 extends TestbedTest {
 		
 		super.addTextLine("SCORE: " + score);
 		super.addTextLine("Lives: " + lives);
-
+		super.addTextLine("Time: " + songDuration);
 		
 		TestbedModel model = super.getModel();
 		
