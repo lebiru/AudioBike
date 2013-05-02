@@ -35,7 +35,8 @@ public class MJWTest2 extends TestbedTest {
 	
 	int score = 0;
 	int lives = 3; //start out with 3 health
-	float time = 0;
+	long beginTime = System.currentTimeMillis();
+	long time = 0;
 	boolean livesMutable = true;
 
 	//motor1 is a RevoluteJoint
@@ -75,7 +76,7 @@ public class MJWTest2 extends TestbedTest {
 		super.addTextLine("Lives: " + lives);
 		super.addTextLine("TIME: " + time);
 		
-		time += 0.1;
+		time = (System.currentTimeMillis() - beginTime) / 1000;
 		
 		if(lives == 0)
 		{
