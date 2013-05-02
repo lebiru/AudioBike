@@ -1,3 +1,6 @@
+import java.io.IOException;
+
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
 import org.jbox2d.testbed.framework.TestbedFrame;
@@ -21,7 +24,7 @@ public class AudioWorld {
 		
 	}
 	
-	public void simulationTest2() throws EchoNestException
+	public void simulationTest2() throws UnsupportedAudioFileException, IOException
 	{
 		
 		TestbedModel model = new TestbedModel();         // create our model

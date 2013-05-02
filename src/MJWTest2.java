@@ -2,6 +2,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Random;
+
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -47,7 +50,7 @@ public class MJWTest2 extends TestbedTest {
 	private double songDuration;
 	
     
-    public MJWTest2(AudioLoader audioLoader) throws EchoNestException
+    public MJWTest2(AudioLoader audioLoader) throws UnsupportedAudioFileException, IOException
     {
     	this.audioLoader = audioLoader;
     	this.songDuration = audioLoader.findDuration();
@@ -80,7 +83,7 @@ public class MJWTest2 extends TestbedTest {
 		super.addTextLine("SCORE: " + score);
 		super.addTextLine("Lives: " + lives);
 
-		super.addTextLine("Total Time: " + songDuration);
+
         int minutes = (int) (time/60);
         int seconds = (int) (time%60);
         
@@ -95,7 +98,7 @@ public class MJWTest2 extends TestbedTest {
    
 
 
-		super.addTextLine("TIME: " + time);
+	
 		
 
 		//countdown

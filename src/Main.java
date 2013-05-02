@@ -17,7 +17,6 @@ public class Main {
 		String fileName = fileChooser.getFileName();
 	
         AudioLoader audioLoader = new AudioLoader(fileName);
-        audioLoader.beginSongAnalysis();
         Global.waveform = audioLoader.audioArr;
         
 		AudioWorld audioWorld = new AudioWorld(audioLoader);

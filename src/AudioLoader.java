@@ -1,4 +1,9 @@
 import java.io.*;
+import java.util.Map;
+
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import com.echonest.api.v4.EchoNestException;
 import com.mpatric.mp3agic.*;
@@ -26,32 +31,19 @@ public class AudioLoader {
 	    
 	}
 	
-	public void beginSongAnalysis() throws EchoNestException, UnsupportedTagException, InvalidDataException, IOException {
-	
-	    try {
-	           
-	        GetAudioInfo songInfo = new GetAudioInfo();
-	        
-	        //check to see if the artist name and song name are in the echo nest database
-	        artistName = songInfo.verifySongsByArtist(artistName);
-	        songTitle = songInfo.verifySongsByTitle(songTitle, artistName);
-	        
-	        System.out.println("Artist: " + artistName + ", Song: " + songTitle);
-	        
-	    } catch (FileNotFoundException e) {
-	      e.printStackTrace();
-	    }
-	    
-	}
-	
 	/**
-    * this class gets the songs tempo (speed) in beats per minute (bpm)
+    * This class gets the songs duration in micro seconds then converts it to milli seconds and returns that value.
     * @return
     * @throws EchoNestException
+	 * @throws IOException 
+	 * @throws UnsupportedAudioFileException 
     */
-	public double findDuration() throws EchoNestException{
-	    GetAudioInfo songInfo = new GetAudioInfo();
-        return songInfo.getSongDuration(artistName, songTitle);
+	public double findDuration() throws UnsupportedAudioFileException, IOException{
+	    AudioFileFormat baseFileFormat = AudioSystem.getAudioFileFormat(mp3File);
+	    Map properties = baseFileFormat.properties();
+	    Long duration = (Long) properties.get("duration");
+	    double durationSec = duration / 1000000;
+		return durationSec;    
 	}
 	
 			
