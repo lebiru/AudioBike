@@ -38,7 +38,7 @@ public class MJWTest2 extends TestbedTest {
 	int lives = 3; //start out with 3 health
 
 	long beginTime = System.currentTimeMillis();
-	long time = 0;
+	double time = 0;
 
 	boolean livesMutable = true;
 
@@ -85,7 +85,7 @@ public class MJWTest2 extends TestbedTest {
 		super.addTextLine("TIME: " + time);
 		
 
-		time = (System.currentTimeMillis() - beginTime) / 1000;
+		time = songDuration - ((System.currentTimeMillis() - beginTime) / 1000);
 
 		
 		if(lives == 0)
