@@ -34,8 +34,10 @@ public class MJWTest2 extends TestbedTest {
 	PolygonShape sandboxbox = new PolygonShape();
 	FixtureDef hill = new FixtureDef();
 	
-	private int score = 0;
-	private int lives = 3; //start out with 3 health
+	int score = 0;
+	int lives = 3; //start out with 3 health
+	float time = 0;
+
 	boolean livesMutable = true;
 
 	//motor1 is a RevoluteJoint
@@ -60,10 +62,6 @@ public class MJWTest2 extends TestbedTest {
 
 		makeLevel();
 		makeHills();
-		
-		
-		
-
 	}
 
 	@Override
@@ -79,8 +77,21 @@ public class MJWTest2 extends TestbedTest {
 		
 		super.addTextLine("SCORE: " + score);
 		super.addTextLine("Lives: " + lives);
-		super.addTextLine("Time: " + songDuration);
+
+		super.addTextLine("Total Time: " + songDuration);
+
+		super.addTextLine("TIME: " + time);
 		
+		time += 0.1;
+
+		
+		if(lives == 0)
+		{
+			super.addTextLine("GAME OVER");
+			return;
+		}
+		
+
 		TestbedModel model = super.getModel();
 		
 
@@ -188,7 +199,7 @@ public class MJWTest2 extends TestbedTest {
 		fixtureDef.shape = bbox;
 		body.createFixture(fixtureDef);
 
-		//makeParticles();
+		makeParticles();
 
 		makeBike();
 		body.resetMassData();
@@ -322,12 +333,13 @@ public class MJWTest2 extends TestbedTest {
 		particleDef.density = 0.01f;
 		particleDef.friction = 0.1f;
 		particleDef.restitution = 0.5f;
+		Random r = new Random();
 
 		for (int i = 0; i < 30; i++) 
 		{
 
 			CircleShape particleShape = new CircleShape();
-			particleShape.m_radius = (float) ((float)Math.random()/20+0.02);
+			particleShape.m_radius = (float) ((float)Math.random()/2);
 			particleDef.shape = particleShape;
 
 			BodyDef particleBD = new BodyDef();
@@ -386,6 +398,8 @@ public class MJWTest2 extends TestbedTest {
 		{
 			CircleShape particleShape = new CircleShape();
 			particleShape.m_radius = radius;
+			
+			
 			particleDef.shape = particleShape;
 
 			BodyDef particleBD = new BodyDef();
@@ -423,7 +437,8 @@ public class MJWTest2 extends TestbedTest {
 	private int[] compressWaveform(byte[] waveform) 
 	{
 
-		int damping = 20000; //TODO figure out good damping number
+		
+		int damping = waveform.length/1000; //TODO figure out good damping number
 		int chunks = waveform.length/damping; //number of data pieces in each chunks     141 == CHUNKS
 		int[] powers = new int[chunks]; // copying the array
 		for(int i = 0; i < chunks; i++) // for each CHUNK
