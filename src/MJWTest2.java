@@ -94,7 +94,15 @@ public class MJWTest2 extends TestbedTest {
 		time = songDuration/2.2 - ((System.currentTimeMillis() - beginTime) / 1000);
    
 
-		if(lives == 0)
+
+		super.addTextLine("TIME: " + time);
+		
+
+		//countdown
+		time = (songDuration/2 - ((System.currentTimeMillis() - beginTime) / 1000));
+
+		
+		if(lives == 0 || time < 0)
 		{
 			super.addTextLine("GAME OVER");
 			return;
@@ -199,12 +207,12 @@ public class MJWTest2 extends TestbedTest {
 		FixtureDef fixtureDef = new FixtureDef();
 
 		//this is the ground
-		bbox.setAsBox(10.0f, 1.0f, new Vec2(0.0f, 0.5f), 0.0f);
+		bbox.setAsBox(10.0f, 1.0f, new Vec2(0.0f, 0.5f), .5f);
 		fixtureDef.shape = bbox;
 		body.createFixture(fixtureDef);
 
 		//this is the left wall
-		bbox.setAsBox(1.0f, 3.0f, new Vec2(-10.0f, 0.5f), 0.0f);
+		bbox.setAsBox(1.0f, 3.0f, new Vec2(-10.0f, -1.5f), 0.0f);
 		fixtureDef.shape = bbox;
 		body.createFixture(fixtureDef);
 
@@ -405,38 +413,80 @@ public class MJWTest2 extends TestbedTest {
 
 		for(int i = 0; i < waveform2.length; i++)
 		{
-			CircleShape particleShape = new CircleShape();
-			particleShape.m_radius = radius;
-			
-			
-			particleDef.shape = particleShape;
+			//1st Third of the level
+			if(i <= waveform2.length/2)
+			{
+				CircleShape particleShape = new CircleShape();
+				particleShape.m_radius = radius;
+				
+				
+				particleDef.shape = particleShape;
 
-			BodyDef particleBD = new BodyDef();
-			particleBD.position.set(11f, 4f);
-			if(i != (waveform2.length-1) && waveform2[i+1] > waveform2[i])
-			{
-				anchorY += offsetY;
+				BodyDef particleBD = new BodyDef();
+				particleBD.position.set(11f, 4f);
+				if(i != (waveform2.length-1) && waveform2[i+1] > waveform2[i])
+				{
+					anchorY += offsetY;
+				}
+				else if(i != (waveform2.length-1) && waveform2[i+1] < waveform2[i])
+				{
+					anchorY -= offsetY;
+				}
+				else
+				{
+					anchorY = anchorY; //if the next one is == to the current one
+				}
+				anchorX += offsetX;
+
+				BodyDef bd = new BodyDef();
+				bd.type = BodyType.STATIC;
+				bd.position.set(anchorX + offsetX, anchorY + offsetY);
+				bd.allowSleep = true;
+				bd.linearDamping = 0.1f;
+				bd.angularDamping = 0.1f;
+
+				Body body = getWorld().createBody(bd);
+				body.createFixture(particleDef);
+				body.resetMassData();
 			}
-			else if(i != (waveform2.length-1) && waveform2[i+1] < waveform2[i])
-			{
-				anchorY -= offsetY;
-			}
+			
 			else
 			{
-				anchorY = anchorY; //if the next one is == to the current one
+				PolygonShape particleShape = new PolygonShape();
+				particleShape.setAsBox(sizeX+0.05f, sizeY+0.05f);
+				
+				
+				particleDef.shape = particleShape;
+
+				BodyDef particleBD = new BodyDef();
+				particleBD.position.set(11f, 4f);
+				if(i != (waveform2.length-1) && waveform2[i+1] > waveform2[i])
+				{
+					anchorY += offsetY;
+				}
+				else if(i != (waveform2.length-1) && waveform2[i+1] < waveform2[i])
+				{
+					anchorY -= offsetY;
+				}
+				else
+				{
+					anchorY = anchorY; //if the next one is == to the current one
+				}
+				anchorX += offsetX;
+
+				BodyDef bd = new BodyDef();
+				bd.type = BodyType.STATIC;
+				bd.position.set(anchorX + offsetX, anchorY + offsetY);
+				bd.allowSleep = true;
+				bd.linearDamping = 0.1f;
+				bd.angularDamping = 0.1f;
+
+				Body body = getWorld().createBody(bd);
+				body.createFixture(particleDef);
+				body.resetMassData();
+				
 			}
-			anchorX += offsetX;
-
-			BodyDef bd = new BodyDef();
-			bd.type = BodyType.STATIC;
-			bd.position.set(anchorX + offsetX, anchorY + offsetY);
-			bd.allowSleep = true;
-			bd.linearDamping = 0.1f;
-			bd.angularDamping = 0.1f;
-
-			Body body = getWorld().createBody(bd);
-			body.createFixture(particleDef);
-			body.resetMassData();
+			
 		}
 
 		return null;
