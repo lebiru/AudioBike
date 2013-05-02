@@ -1,4 +1,6 @@
 import java.io.*;
+
+import com.echonest.api.v4.EchoNestException;
 import com.mpatric.mp3agic.*;
 import javazoom.jl.decoder.*;
 
@@ -23,6 +25,35 @@ public class AudioLoader {
 	    this.audioArr = decodeAudio();
 	    
 	}
+	
+	public void beginSongAnalysis() throws EchoNestException, UnsupportedTagException, InvalidDataException, IOException {
+	
+	    try {
+	           
+	        GetAudioInfo songInfo = new GetAudioInfo();
+	        
+	        //check to see if the artist name and song name are in the echo nest database
+	        artistName = songInfo.verifySongsByArtist(artistName);
+	        songTitle = songInfo.verifySongsByTitle(songTitle, artistName);
+	        
+	        System.out.println("Artist: " + artistName + ", Song: " + songTitle);
+	        
+	    } catch (FileNotFoundException e) {
+	      e.printStackTrace();
+	    }
+	    
+	}
+	
+	/**
+    * this class gets the songs tempo (speed) in beats per minute (bpm)
+    * @return
+    * @throws EchoNestException
+    */
+	public double findDuration() throws EchoNestException{
+	    GetAudioInfo songInfo = new GetAudioInfo();
+        return songInfo.getSongDuration(artistName, songTitle);
+	}
+	
 			
     /**
      * gets the waveform data in bytes from the audio inputStream

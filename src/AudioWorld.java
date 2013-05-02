@@ -7,6 +7,8 @@ import org.jbox2d.testbed.framework.TestbedSetting;
 import org.jbox2d.testbed.framework.TestbedSetting.SettingType;
 import org.jbox2d.testbed.framework.j2d.TestPanelJ2D;
 
+import com.echonest.api.v4.EchoNestException;
+
 public class AudioWorld {
 	AudioLoader audioLoader;
 	public AudioWorld(AudioLoader audioLoader)
@@ -19,7 +21,7 @@ public class AudioWorld {
 		
 	}
 	
-	public void simulationTest2()
+	public void simulationTest2() throws EchoNestException
 	{
 		
 		TestbedModel model = new TestbedModel();         // create our model
