@@ -1,5 +1,6 @@
 import java.io.IOException;
 
+
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
@@ -9,8 +10,6 @@ import org.jbox2d.testbed.framework.TestbedPanel;
 import org.jbox2d.testbed.framework.TestbedSetting;
 import org.jbox2d.testbed.framework.TestbedSetting.SettingType;
 import org.jbox2d.testbed.framework.j2d.TestPanelJ2D;
-
-import com.echonest.api.v4.EchoNestException;
 
 public class AudioWorld {
 	AudioLoader audioLoader;

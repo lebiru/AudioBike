@@ -74,6 +74,7 @@ public class AudioPlayer {
 			@SuppressWarnings("unused")
 			int nBytesRead = 0, nBytesWritten = 0;
 			while(nBytesRead != -1){
+				if(Main.stop == true) break;
 				nBytesRead = din.read(data,0,data.length);
 				if (nBytesRead != -1){
 					nBytesWritten = line.write(data,0,nBytesRead);

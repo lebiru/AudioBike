@@ -93,21 +93,14 @@ public class MJWTest2 extends TestbedTest {
         else{
         	super.addTextLine("TIME: " + minutes + ":" + seconds);
         }
-
+        
+		//countdown
 		time = songDuration/2.2 - ((System.currentTimeMillis() - beginTime) / 1000);
    
-
-
-	
-		
-
-		//countdown
-		time = (songDuration/2 - ((System.currentTimeMillis() - beginTime) / 1000));
-
-		
 		if(lives == 0 || time < 0)
 		{
 			super.addTextLine("GAME OVER");
+			Main.stop = true;
 			return;
 		}
 		
@@ -210,7 +203,7 @@ public class MJWTest2 extends TestbedTest {
 		FixtureDef fixtureDef = new FixtureDef();
 
 		//this is the ground
-		bbox.setAsBox(10.0f, 1.0f, new Vec2(0.0f, 0.5f), .5f);
+		bbox.setAsBox(10.0f, 1.0f, new Vec2(0.0f, 0.5f), .32f);
 		fixtureDef.shape = bbox;
 		body.createFixture(fixtureDef);
 
@@ -389,12 +382,8 @@ public class MJWTest2 extends TestbedTest {
 	{
 		
 		Body hillMaker = getWorld().createBody(sandbox);
-
-		System.out.println("----------------");
 		
 		int[] waveform2 = compressWaveform(Global.waveform);
-		System.out.println("here");
-		System.out.println(waveform2.length);
 
 		/* CIRCLES METHOD */
 		float sizeX = 0.1f;
